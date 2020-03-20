@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysfunction.dao.TSFunctionMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSFunction">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="functioniframe" jdbcType="SMALLINT" property="functioniframe" />
+    <result column="functionlevel" jdbcType="SMALLINT" property="functionlevel" />
+    <result column="functionname" jdbcType="VARCHAR" property="functionname" />
+    <result column="functionorder" jdbcType="VARCHAR" property="functionorder" />
+    <result column="functionurl" jdbcType="VARCHAR" property="functionurl" />
+    <result column="parentfunctionid" jdbcType="VARCHAR" property="parentfunctionid" />
+    <result column="iconid" jdbcType="VARCHAR" property="iconid" />
+ <!--  
+   <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="platform_id" jdbcType="VARCHAR" property="platformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" /> 
+ -->
+    <result column="desk_iconid" jdbcType="VARCHAR" property="deskIconid" />
+    <result column="functiontype" jdbcType="SMALLINT" property="functiontype" />
+    <result column="function_icon_style" jdbcType="VARCHAR" property="functionIconStyle" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+  </resultMap>
+  
+    
+  <!-- 模块Vo -->
+  <resultMap id="BaseFunctionVoMap" type="com.dome.bean.vo.TSFunctionVo">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="functioniframe" jdbcType="SMALLINT" property="functioniframe" />
+    <result column="functionlevel" jdbcType="SMALLINT" property="functionlevel" />
+    <result column="functionname" jdbcType="VARCHAR" property="functionname" />
+    <result column="functionorder" jdbcType="VARCHAR" property="functionorder" />
+    <result column="functionurl" jdbcType="VARCHAR" property="functionurl" />
+    <result column="parentfunctionid" jdbcType="VARCHAR" property="parentfunctionid" />
+    <result column="desk_iconid" jdbcType="VARCHAR" property="deskIconid" />
+ <!-- 
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="platform_id" jdbcType="VARCHAR" property="platformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" /> 
+ -->
+    <result column="functiontype" jdbcType="SMALLINT" property="functiontype" />
+    <result column="function_icon_style" jdbcType="VARCHAR" property="functionIconStyle" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+     <association property="tSIcon" javaType="com.dome.bean.TSIcon">
+	    <id column="iconId" jdbcType="VARCHAR" property="id" />
+	    <result column="extend" jdbcType="VARCHAR" property="extend" />
+	    <result column="iconclas" jdbcType="VARCHAR" property="iconclas" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="type" jdbcType="SMALLINT" property="type" />
+	    <result column="content" jdbcType="LONGVARBINARY" property="content" />
+	    <result column="path" jdbcType="LONGVARCHAR" property="path" />
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List"> <!-- hospital_id,departname,platform_id,platform_name, -->
+    ID, functioniframe, functionlevel, functionname, functionorder, functionurl, parentfunctionid, iconid, 
+    desk_iconid, functiontype, function_icon_style, create_by, create_name, update_by, update_date, create_date, update_name 
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_s_function
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_function
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.TSFunction">
+    insert into t_s_function (ID, functioniframe, functionlevel, 
+      functionname, functionorder, functionurl, parentfunctionid, 
+      iconid, desk_iconid, 
+      functiontype, function_icon_style, create_by, 
+      create_name, update_by, update_date, 
+      create_date, update_name)
+    values (#{id,jdbcType=VARCHAR}, #{functioniframe,jdbcType=SMALLINT}, #{functionlevel,jdbcType=SMALLINT}, 
+      #{functionname,jdbcType=VARCHAR}, #{functionorder,jdbcType=VARCHAR}, #{functionurl,jdbcType=VARCHAR}, 
+      #{parentfunctionid,jdbcType=VARCHAR}, #{iconid,jdbcType=VARCHAR}, #{deskIconid,jdbcType=VARCHAR}, 
+      #{functiontype,jdbcType=SMALLINT}, #{functionIconStyle,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR})
+  </insert>
+ 
+  <insert id="insertSelective" parameterType="com.dome.bean.TSFunction">
+    insert into t_s_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="functioniframe != null">
+        functioniframe,
+      </if>
+      <if test="functionlevel != null">
+        functionlevel,
+      </if>
+      <if test="functionname != null">
+        functionname,
+      </if>
+      <if test="functionorder != null">
+        functionorder,
+      </if>
+      <if test="functionurl != null">
+        functionurl,
+      </if>
+      <if test="parentfunctionid != null">
+        parentfunctionid,
+      </if>
+      <if test="iconid != null">
+        iconid,
+      </if>
+      <if test="deskIconid != null">
+        desk_iconid,
+      </if>
+      <if test="functiontype != null">
+        functiontype,
+      </if>
+      <if test="functionIconStyle != null">
+        function_icon_style,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="functioniframe != null">
+        #{functioniframe,jdbcType=SMALLINT},
+      </if>
+      <if test="functionlevel != null">
+        #{functionlevel,jdbcType=SMALLINT},
+      </if>
+      <if test="functionname != null">
+        #{functionname,jdbcType=VARCHAR},
+      </if>
+      <if test="functionorder != null">
+        #{functionorder,jdbcType=VARCHAR},
+      </if>
+      <if test="functionurl != null">
+        #{functionurl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentfunctionid != null">
+        #{parentfunctionid,jdbcType=VARCHAR},
+      </if>
+      <if test="iconid != null">
+        #{iconid,jdbcType=VARCHAR},
+      </if>
+      <if test="deskIconid != null">
+        #{deskIconid,jdbcType=VARCHAR},
+      </if>
+      <if test="functiontype != null">
+        #{functiontype,jdbcType=SMALLINT},
+      </if>
+      <if test="functionIconStyle != null">
+        #{functionIconStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+     
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSFunction">
+    update t_s_function
+    <set>
+      <if test="functioniframe != null">
+        functioniframe = #{functioniframe,jdbcType=SMALLINT},
+      </if>
+      <if test="functionlevel != null">
+        functionlevel = #{functionlevel,jdbcType=SMALLINT},
+      </if>
+      <if test="functionname != null">
+        functionname = #{functionname,jdbcType=VARCHAR},
+      </if>
+      <if test="functionorder != null">
+        functionorder = #{functionorder,jdbcType=VARCHAR},
+      </if>
+      <if test="functionurl != null">
+        functionurl = #{functionurl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentfunctionid != null">
+        parentfunctionid = #{parentfunctionid,jdbcType=VARCHAR},
+      </if>
+      <if test="iconid != null">
+        iconid = #{iconid,jdbcType=VARCHAR},
+      </if>
+      <if test="deskIconid != null">
+        desk_iconid = #{deskIconid,jdbcType=VARCHAR},
+      </if>
+      <if test="functiontype != null">
+        functiontype = #{functiontype,jdbcType=SMALLINT},
+      </if>
+      <if test="functionIconStyle != null">
+        function_icon_style = #{functionIconStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+ 
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSFunction">
+    update t_s_function
+    set functioniframe = #{functioniframe,jdbcType=SMALLINT},
+      functionlevel = #{functionlevel,jdbcType=SMALLINT},
+      functionname = #{functionname,jdbcType=VARCHAR},
+      functionorder = #{functionorder,jdbcType=VARCHAR},
+      functionurl = #{functionurl,jdbcType=VARCHAR},
+      parentfunctionid = #{parentfunctionid,jdbcType=VARCHAR},
+      iconid = #{iconid,jdbcType=VARCHAR},
+      desk_iconid = #{deskIconid,jdbcType=VARCHAR},
+      functiontype = #{functiontype,jdbcType=SMALLINT},
+      function_icon_style = #{functionIconStyle,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据角色查询模块 -->
+  <select id="findRoleFunction" parameterType="map" resultMap="BaseFunctionVoMap">
+	  	SELECT
+			sf.ID,sf.functioniframe,sf.functionlevel,sf.functionname,sf.functionorder,
+			sf.functionurl,sf.parentfunctionid,sf.iconid,sf.desk_iconid,sf.functiontype,
+			sf.function_icon_style,sf.create_by,sf.create_name,sf.update_by,
+			sf.update_date,sf.create_date,sf.update_name,si.ID as iconId,
+			si.extend,si.iconclas,si.content,si.name,si.path,si.type
+		FROM t_s_role_function rf  
+		LEFT JOIN t_s_function sf ON sf.ID = rf.functionid
+		INNER JOIN t_s_icon si ON si.ID = sf.iconid
+		WHERE rf.roleid = #{roleId,jdbcType=VARCHAR}
+   </select>
+</mapper>

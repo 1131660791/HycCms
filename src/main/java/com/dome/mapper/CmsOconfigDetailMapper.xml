@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmsoconfigdetail.dao.CmsOconfigDetailMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsOconfigDetail">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="config_id" jdbcType="VARCHAR" property="configId" />
+    <result column="package_money" jdbcType="DECIMAL" property="packageMoney" />
+    <result column="package_time" jdbcType="DOUBLE" property="packageTime" />
+    <result column="package_time_unit" jdbcType="VARCHAR" property="packageTimeUnit" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="fk_servicecombo_id" jdbcType="VARCHAR" property="fkServicecomboId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, config_id, package_money, package_time, package_time_unit, create_time, update_time, 
+    fk_servicecombo_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hyc_oconfig_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_oconfig_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.CmsOconfigDetail">
+    insert into hyc_oconfig_detail (id, config_id, package_money, 
+      package_time, package_time_unit, create_time, 
+      update_time, fk_servicecombo_id)
+    values (#{id,jdbcType=VARCHAR}, #{configId,jdbcType=VARCHAR}, #{packageMoney,jdbcType=DECIMAL}, 
+      #{packageTime,jdbcType=DOUBLE}, #{packageTimeUnit,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{fkServicecomboId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsOconfigDetail">
+    insert into hyc_oconfig_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="configId != null">
+        config_id,
+      </if>
+      <if test="packageMoney != null">
+        package_money,
+      </if>
+      <if test="packageTime != null">
+        package_time,
+      </if>
+      <if test="packageTimeUnit != null">
+        package_time_unit,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="fkServicecomboId != null">
+        fk_servicecombo_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="configId != null">
+        #{configId,jdbcType=VARCHAR},
+      </if>
+      <if test="packageMoney != null">
+        #{packageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="packageTime != null">
+        #{packageTime,jdbcType=DOUBLE},
+      </if>
+      <if test="packageTimeUnit != null">
+        #{packageTimeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fkServicecomboId != null">
+        #{fkServicecomboId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsOconfigDetail">
+    update hyc_oconfig_detail
+    <set>
+      <if test="configId != null">
+        config_id = #{configId,jdbcType=VARCHAR},
+      </if>
+      <if test="packageMoney != null">
+        package_money = #{packageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="packageTime != null">
+        package_time = #{packageTime,jdbcType=DOUBLE},
+      </if>
+      <if test="packageTimeUnit != null">
+        package_time_unit = #{packageTimeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fkServicecomboId != null">
+        fk_servicecombo_id = #{fkServicecomboId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsOconfigDetail">
+    update hyc_oconfig_detail
+    set config_id = #{configId,jdbcType=VARCHAR},
+      package_money = #{packageMoney,jdbcType=DECIMAL},
+      package_time = #{packageTime,jdbcType=DOUBLE},
+      package_time_unit = #{packageTimeUnit,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      fk_servicecombo_id = #{fkServicecomboId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 删除 医生服务 与套餐关联  -->
+  <delete id="deleteDoctorConfigDetail" parameterType="map">
+    delete from hyc_oconfig_detail
+    where 1=1 
+    <if test="configDetails != null and configDetails.size > 0">
+       AND 
+		<foreach collection="configDetails" item="configDetailId" open="(" separator="OR" close=")">
+			config_id = #{configDetailId,jdbcType=VARCHAR}
+		</foreach>
+    </if>
+  </delete>
+  
+  
+</mapper>

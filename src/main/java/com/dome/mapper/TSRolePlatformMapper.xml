@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysroleplatform.dao.TSRolePlatformMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSRolePlatform">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fk_role_id" jdbcType="VARCHAR" property="fkRoleId" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+  </resultMap>
+  
+  <resultMap id="BaseRolePlatformVoMap" type="com.dome.web.sysroleplatform.vo.CmsRolePlatformVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="platform_url" jdbcType="VARCHAR" property="platformUrl" />
+    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    
+    <result column="fk_role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, fk_role_id, fk_platform_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_s_role_platform
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_role_platform
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.TSRolePlatform">
+    insert into t_s_role_platform (id, fk_role_id, fk_platform_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{fkRoleId,jdbcType=VARCHAR}, #{fkPlatformId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.TSRolePlatform">
+    insert into t_s_role_platform
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fkRoleId != null">
+        fk_role_id,
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fkRoleId != null">
+        #{fkRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSRolePlatform">
+    update t_s_role_platform
+    <set>
+      <if test="fkRoleId != null">
+        fk_role_id = #{fkRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSRolePlatform">
+    update t_s_role_platform
+    set fk_role_id = #{fkRoleId,jdbcType=VARCHAR},
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询角色 -->
+  <select id="findRolePlatform" parameterType="java.lang.String" resultMap="BaseRolePlatformVoMap">
+    SELECT
+		p.id,p.platform_name,p.platform_url,p.state,p.creation_time,p.update_time,p.create_user,p.update_user,
+    	p.create_user_name,p.update_user_name, CASE WHEN rp.fk_platform_id IS NULL THEN 0  else 1 END AS flag,rp.fk_role_id
+ 	FROM t_s_platform p 
+	LEFT JOIN t_s_role_platform rp ON rp.fk_platform_id = p.id AND rp.fk_role_id = #{roleId,jdbcType=VARCHAR}
+	GROUP BY  p.id,p.platform_name,p.platform_url,p.state,p.creation_time,p.update_time,
+	p.create_user,p.update_user,p.create_user_name,p.update_user_name,rp.id,rp.fk_role_id
+	
+  </select>
+  
+  <!-- 查询角色管理的平台 -->
+  <select id="findRoleManagePlatform"  parameterType="map" resultMap="BaseResultMap">
+ 	select 
+    	<include refid="Base_Column_List" />
+    from t_s_role_platform
+    where fk_role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 删除角色平台 -->
+  <delete id="deleteRolePlatform" parameterType="map">
+    delete from t_s_role_platform
+    where fk_role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+</mapper>

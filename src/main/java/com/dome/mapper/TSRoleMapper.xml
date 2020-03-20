@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysrole.dao.TSRoleMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSRole">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="rolecode" jdbcType="VARCHAR" property="rolecode" />
+    <result column="rolename" jdbcType="VARCHAR" property="rolename" />
+    <result column="depart_ag_id" jdbcType="VARCHAR" property="departAgId" />
+    <result column="role_type" jdbcType="VARCHAR" property="roleType" />
+    <result column="belong_org_id" jdbcType="VARCHAR" property="belongOrgId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  
+  <!-- 角色Vo -->
+  <resultMap id="BaseTsRoleVoMap" type="com.dome.bean.vo.TSRoleVo">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="rolecode" jdbcType="VARCHAR" property="rolecode" />
+    <result column="rolename" jdbcType="VARCHAR" property="rolename" />
+    <result column="depart_ag_id" jdbcType="VARCHAR" property="departAgId" />
+    <result column="role_type" jdbcType="VARCHAR" property="roleType" />
+    <result column="belong_org_id" jdbcType="VARCHAR" property="belongOrgId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <result column="platformName" jdbcType="VARCHAR" property="platformName" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List">
+    ID, rolecode, rolename, depart_ag_id, role_type, belong_org_id, departname, update_name, 
+    update_date, update_by, create_name, create_date, create_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_s_role
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_role
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.TSRole">
+    insert into t_s_role (ID, rolecode, rolename, 
+      depart_ag_id, role_type, belong_org_id, 
+      departname, update_name, update_date, 
+      update_by, create_name, create_date, 
+      create_by)
+    values (#{id,jdbcType=VARCHAR}, #{rolecode,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}, 
+      #{departAgId,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR}, #{belongOrgId,jdbcType=VARCHAR}, 
+      #{departname,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.TSRole">
+    insert into t_s_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rolecode != null">
+        rolecode,
+      </if>
+      <if test="rolename != null">
+        rolename,
+      </if>
+      <if test="departAgId != null">
+        depart_ag_id,
+      </if>
+      <if test="roleType != null">
+        role_type,
+      </if>
+      <if test="belongOrgId != null">
+        belong_org_id,
+      </if>
+      <if test="departname != null">
+        departname,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rolecode != null">
+        #{rolecode,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null">
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="departAgId != null">
+        #{departAgId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null">
+        #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrgId != null">
+        #{belongOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSRole">
+    update t_s_role
+    <set>
+      <if test="rolecode != null">
+        rolecode = #{rolecode,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null">
+        rolename = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="departAgId != null">
+        depart_ag_id = #{departAgId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null">
+        role_type = #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrgId != null">
+        belong_org_id = #{belongOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        departname = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSRole">
+    update t_s_role
+    set rolecode = #{rolecode,jdbcType=VARCHAR},
+      rolename = #{rolename,jdbcType=VARCHAR},
+      depart_ag_id = #{departAgId,jdbcType=VARCHAR},
+      role_type = #{roleType,jdbcType=VARCHAR},
+      belong_org_id = #{belongOrgId,jdbcType=VARCHAR},
+      departname = #{departname,jdbcType=VARCHAR},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+ <!-- 查询用户角色信息 -->
+ <select id="findUserRoleInfo" parameterType="map" resultMap="BaseResultMap">
+ 	SELECT
+		r.ID,r.rolecode,r.rolename,r.depart_ag_id,r.role_type,r.belong_org_id,
+		r.departname,r.update_name,r.update_date,r.update_by,r.create_name,r.create_date,r.create_by
+	FROM t_s_role_user tu 
+	LEFT JOIN t_s_base_user bu ON tu.userid = bu.ID
+	LEFT JOIN t_s_role r ON r.ID = tu.roleid
+	WHERE bu.username = #{loginName,jdbcType=VARCHAR}
+ </select>
+ 
+ <!-- 查询角色列表 -->
+ <select id="findRolesPage" parameterType="map" resultMap="BaseTsRoleVoMap">
+ 	SELECT 	
+		r.ID,r.rolecode,r.rolename,r.depart_ag_id,r.role_type,r.belong_org_id,r.departname,
+		r.update_name,r.update_date,r.update_by,r.create_name,r.create_date,r.create_by,GROUP_CONCAT(p.platform_name) AS platformName
+	FROM t_s_role r
+	LEFT JOIN t_s_role_platform rp ON rp.fk_role_id = r.ID
+	LEFT JOIN t_s_platform p ON rp.fk_platform_id  = p.id
+	where r.role_type = 0
+	GROUP BY r.ID,r.rolecode,r.rolename,r.depart_ag_id,r.role_type,r.belong_org_id,r.departname,r.update_name,r.update_date,r.update_by,r.create_name,r.create_date,r.create_by
+ </select>
+ 
+  
+</mapper>

@@ -1,0 +1,10 @@
+**/node_modules
+**/PPDeal/code/common
+**/PPDWebUI/**/cordova
+**/build
+**/dist
+**/config
+**/test
+*.min.js
+gulpfile.js
+.babelrc

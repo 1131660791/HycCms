@@ -1,0 +1,76 @@
+// 颜色
+$color : #e5e3e3;
+$color_one : #6b61f2;
+$color_two : #409EFF;
+$color_three : #ddd;
+// 宽
+$width_one : 80px;
+$width_two : 100px;
+$width_three : 120px;
+// 高
+$height_one : 32px;
+$height_two : 36px;
+$height_three : 40px;
+// 边框
+$border : #e2e2e2;
+// 圆角
+$border_radius : 4px;
+// 字体颜色
+$font_color_one : #333;
+$font_color_two : #999;
+$font_color_three : #fff;
+$font_color_four : #000;
+$font_color_five : rgba(0,0,0,0.5);
+// 字号
+$font_size_one : 14px;
+$font_size_two : 16px;
+$font_size_three : 18px;
+
+.btn_cancel,.btn_sure,.btn{
+    width: $width_two;
+    height: $height_two;
+    background-color: $color;
+    border-radius: $border_radius;
+    display: inline-block;
+    cursor: pointer;
+    color: $font_color_three;
+    text-align: center;
+    line-height: $height_two;
+    &:hover{
+        background-color: $color_two;
+        color: $font_color_three;
+    }
+}
+.btn_cancel{
+    color: $font_color_two;
+}
+.btn_sure{
+    background-color: $color_two;
+}
+.btn{
+    background-color: $color_one;
+}
+#gray_btn{
+    background-color: $color_three;
+    color: $font_color_two;
+}
+
+table{
+    border-top: 1px solid $border;
+    border-left: 1px solid $border;
+    border-spacing: 0;
+    font-size: $font_size_one;
+}
+table td{
+    border-right: 1px solid $border;
+    border-bottom: 1px solid $border;
+    height: $height_three;
+    line-height: $height_three;
+    padding: 0 12px;
+    margin: 0;
+}
+select,input{
+    border: 1px solid $border;
+    border-radius: $border_radius;
+    padding: 0 5px;
+}

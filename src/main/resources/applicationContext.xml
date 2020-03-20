@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:task="http://www.springframework.org/schema/task" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       	   http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd 
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd  
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+	
+	<!-- 配置自动识别注解 -->
+   	<context:component-scan base-package="com.dome" >
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- <task:annotation-driven/> -->
+	
+    <task:annotation-driven executor="asyncExecutor" scheduler="scheduler"/>
+ 	<task:executor id="asyncExecutor" pool-size="100-1000" queue-capacity="10000" rejection-policy="CALLER_RUNS"/>
+ 	<task:scheduler id="scheduler" pool-size="100" />
+	
+    <!--加载数据库配置文件-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	      <property name="locations">
+	           <list>
+				  <value>classpath:database.properties</value>
+		   <!--   <value>classpath:redis.properties</value> -->
+	          </list>
+	      </property>
+    </bean>
+	
+	<!-- shiro 权限配置 -->
+	<import resource="shiro.xml" /> 
+	
+	<!-- redis 数据中心  
+	<import resource="datasource-redis.xml" /> 
+	-->
+	
+	<!-- 数据中心 1-->
+	<import resource="datasource-mysql.xml" />
+	
+	<!-- 数据中心 2 
+	<import resource="datasource-mysqlTwo.xml" /> 
+	-->
+	
+	<!-- 解决使用@ResponseBody 的中文乱码。 --> 
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+        <property name="messageConverters">  
+            <list>  
+                <!-- JSON解析对象 -->
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+                	<property name="supportedMediaTypes">
+						<list>
+							<value>application/json;charset=UTF-8</value>
+						</list>
+					</property>
+                </bean>  
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+                    <property name="supportedMediaTypes">  
+                        <list>  
+                            <value>text/plain;charset=UTF-8</value>  
+                        </list>  
+                    </property>  
+                </bean>  
+            </list>  
+        </property>
+         <!-- 日期格式转换 -->
+	    <property name="webBindingInitializer">    
+	        <bean class="com.dome.filter.DateConverterFilter" />    
+	    </property>    
+    </bean>
+ 	
+	<!-- 使用kaptcha 生成验证码
+ 	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
+ 	  验证码  kaptcha
+        <property name="config">  
+            <bean class="com.google.code.kaptcha.util.Config">  
+                <constructor-arg>  
+                    <props>  
+                        <prop key="kaptcha.border">yes</prop>  
+                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>  
+                        <prop key="kaptcha.image.width">125</prop>  
+                        <prop key="kaptcha.image.height">45</prop>  
+                        <prop key="kaptcha.textproducer.font.size">45</prop>  
+                        <prop key="kaptcha.session.key">kaptchaRemote</prop>  
+                        <prop key="kaptcha.textproducer.char.length">4</prop>  
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>  
+                    </props>  
+                </constructor-arg>  
+            </bean>  
+        </property>  
+    </bean>
+     -->
+</beans>

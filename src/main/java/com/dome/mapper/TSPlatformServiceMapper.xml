@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysplatformservice.dao.TSPlatformServiceMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSPlatformService">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <!-- 平台服务Vo -->
+  <resultMap id="BasePlatformServiceResultMap" type="com.dome.bean.vo.TSPlatformServiceVo">
+    <result column="userId" jdbcType="VARCHAR" property="userId" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="servicePublicName" jdbcType="VARCHAR" property="servicePublicName" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    
+    <association property="platform" javaType="com.dome.bean.TSPlatform"> 
+	    <id column="fk_platform_id" jdbcType="VARCHAR" property="id" />
+	    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    </association>
+  </resultMap>
+  
+  <!-- 医生服务Vo -->
+  <resultMap id="BaseDoctorServiceVoMap" type="com.dome.web.sysplatformservice.vo.CmsDoctorServiceVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="fk_column_id" jdbcType="VARCHAR" property="fkColumnId" />
+    <collection property="platformServiceCombos"  resultMap="BaseServiceComboMap" />
+  </resultMap>
+  
+  <!-- 查询平台服务 -->
+  <resultMap id="BasePlatformServiceVoMap" type="com.dome.bean.vo.PlatformServiceVo">
+  	<id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    
+    <collection property="platformServiceCombos"  resultMap="BaseServiceComboMap" />
+  </resultMap>
+  
+  <!-- 平台服务套餐 -->
+  <resultMap id="BaseServiceComboMap" type="com.dome.bean.TSPlatformServiceCombo">
+    <id column="comboId" jdbcType="VARCHAR" property="id" />
+    <result column="combo_name" jdbcType="VARCHAR" property="comboName" />
+    <result column="package_money" jdbcType="INTEGER" property="packageMoney" />
+    <result column="package_time" jdbcType="INTEGER" property="packageTime" />
+    <result column="package_time_unit" jdbcType="VARCHAR" property="packageTimeUnit" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="fk_platformservice_id" jdbcType="VARCHAR" property="fkPlatformserviceId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, service_name, fk_platform_id, create_user, update_user,create_user_name,update_user_name, state ,create_time, update_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_s_platform_service
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_platform_service
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.dome.bean.TSPlatformService">
+    insert into t_s_platform_service (id, service_name, fk_platform_id, 
+      create_user,state, update_user,create_user_name,update_user_name, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, #{fkPlatformId,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{updateUser,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.dome.bean.TSPlatformService">
+    insert into t_s_platform_service
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serviceName != null">
+        service_name,
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSPlatformService">
+    update t_s_platform_service
+    <set>
+      <if test="serviceName != null">
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+     
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSPlatformService">
+    update t_s_platform_service
+    set service_name = #{serviceName,jdbcType=VARCHAR},
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询医生服务  -->
+  <select id="findDoctorServicesPage" parameterType="map" resultMap="BasePlatformServiceResultMap">
+  	SELECT 
+		bu.userId,bu.realname,bu.departname,bu.service_name,bu.servicePublicName,bu.create_user,bu.state,bu.column_name 
+	FROM (	
+	  	SELECT 	
+			 bu.ID as userId,bu.realname,d.departname,cc.service_name,cc.servicePublicName,cc.create_user,cc.state,cc.column_name
+		FROM (
+			SELECT 
+				bu.ID ,bu.realname,bu.username,bu.hospital_id
+			FROM t_s_base_user bu
+			INNER JOIN t_s_user u ON bu.ID = u.id 
+			WHERE u.user_type = 6 AND bu.hospital_id IS NOT NULL
+		) bu
+		LEFT JOIN (
+			SELECT
+			   cc.config_own_user_id,GROUP_CONCAT(ps.service_name) as service_name,
+			   GROUP_CONCAT(ps.servicePublicName) as servicePublicName,cc.fk_platform_id,ps.create_user,
+			   cc.state,p.platform_name,GROUP_CONCAT(c.column_name) as column_name
+			FROM hyc_cost_configuration cc
+			LEFT JOIN (
+				SELECT
+					ps.id,ps.service_name,ps.fk_platform_id,ps.create_user,bu.realname as servicePublicName
+				FROM t_s_platform_service  ps
+			  LEFT JOIN t_s_base_user bu ON ps.create_user = bu.ID
+			) ps ON cc.business_type = ps.id 
+			LEFT JOIN t_s_platform p ON p.id = cc.fk_platform_id
+			LEFT JOIN hyc_c_column c ON cc.fk_column_id = c.id
+			WHERE 1=1
+		 	 <if test="hospitalId != null and hospitalId !=''">	
+				 AND cc.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	     	 </if>
+		  GROUP BY cc.config_own_user_id,cc.fk_platform_id,ps.create_user,cc.state,p.platform_name,ps.servicePublicName
+		) cc ON bu.ID = cc.config_own_user_id
+		LEFT JOIN t_s_depart d ON bu.hospital_id = d.ID 
+		WHERE  1=1 
+		 <if test="hospitalId != null and hospitalId !=''">
+			 AND bu.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+		 </if>
+		 <if test="doctorName != null and doctorName !=''">
+			 AND bu.realname LIKE CONCAT('%','${doctorName}','%')
+		 </if>
+		 AND cc.fk_platform_id IS NULL
+	     GROUP BY bu.ID,bu.realname,d.departname,cc.service_name, cc.servicePublicName,cc.create_user, cc.state ,cc.column_name
+	 UNION
+		SELECT 	
+			 bu.ID as userId,bu.realname,d.departname,cc.service_name, cc.servicePublicName,cc.create_user, cc.state,cc.column_name
+		FROM (
+			SELECT 
+				bu.ID ,bu.realname,bu.username,bu.hospital_id
+			FROM t_s_base_user bu
+			INNER JOIN t_s_user u ON bu.ID = u.id 
+			WHERE u.user_type = 6 AND bu.hospital_id IS NOT NULL
+		) bu
+		LEFT JOIN (
+			SELECT
+			   cc.config_own_user_id,GROUP_CONCAT(ps.service_name) as service_name,
+			   GROUP_CONCAT(ps.servicePublicName) as servicePublicName,cc.fk_platform_id,ps.create_user,
+			   cc.state,p.platform_name,GROUP_CONCAT(c.column_name) as column_name
+			FROM hyc_cost_configuration cc
+			LEFT JOIN (
+				SELECT
+					ps.id,ps.service_name,ps.fk_platform_id,ps.create_user,bu.realname as servicePublicName
+				FROM t_s_platform_service  ps
+			  LEFT JOIN t_s_base_user bu ON ps.create_user = bu.ID
+			) ps ON cc.business_type = ps.id 
+			LEFT JOIN t_s_platform p ON p.id = cc.fk_platform_id
+			LEFT JOIN hyc_c_column c ON cc.fk_column_id = c.id
+			WHERE 1=1
+		 	<if test="hospitalId != null and hospitalId !=''">	
+				 AND cc.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	     	</if>
+		  GROUP BY cc.config_own_user_id,cc.fk_platform_id,ps.create_user,cc.state,p.platform_name,ps.servicePublicName
+		) cc ON bu.ID = cc.config_own_user_id
+		LEFT JOIN t_s_depart d ON bu.hospital_id = d.ID 
+		WHERE  1=1 
+		 <if test="hospitalId != null and hospitalId !=''">	
+			 AND bu.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+		 </if>
+		 <if test="doctorName != null and doctorName !=''">	
+			 AND bu.realname LIKE CONCAT('%','${doctorName}','%')
+		 </if>
+		 <!-- 确认查询 平台的医生 -->
+		 <if test="platformId != null and platformId !=''">
+			 AND cc.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+		 </if>
+		 <!-- 查询 本角色 的平台 -->
+	     <if test="platformIds != null and platformIds.size > 0">
+	       AND 
+			<foreach collection="platformIds" item="platformId" open="(" separator="OR" close=")">
+				cc.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+			</foreach>
+	     </if>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 AND cc.fk_platform_id IS NULL
+	     GROUP BY bu.ID,bu.realname,d.departname,cc.service_name, cc.servicePublicName,cc.create_user, cc.state ,cc.column_name
+	 ) bu
+  </select>
+  
+  <!-- 查询医生平台 服务配置 -->
+  <select id="findDoctorPlatformService" parameterType="map" resultMap="BaseDoctorServiceVoMap">
+  	SELECT
+		 ps.id, ps.service_name,oc.public_time, oc.expire_time,oc.sort,
+		 oc.fk_column_id, oc.fk_platform_id,pc.id AS comboId
+	FROM hyc_cost_configuration oc 
+	LEFT JOIN t_s_platform_service ps ON oc.business_type = ps.id <!-- 平台服务 -->
+	LEFT JOIN t_s_platformservice_combo pc ON pc.fk_platformservice_id = ps.id <!-- 平台服务套餐 -->
+	WHERE 1=1 AND ps.state = 0 <!-- 平台服务 启用 -->
+	  <if test="doctorId != null and doctorId !=''">
+		 AND oc.config_own_user_id = #{doctorId,jdbcType=VARCHAR} 
+	  </if>
+	  <!-- 查询 本角色 的平台 -->
+     <if test="platformIds != null and platformIds.size > 0">
+       AND 
+		<foreach collection="platformIds" item="platformId" open="(" separator="OR" close=")">
+			oc.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+		</foreach>
+     </if>
+  </select>
+
+  <!-- 查询平台服务 -->
+  <select id="findPlatformServiceInfo" parameterType="map" resultMap="BasePlatformServiceVoMap">
+  	SELECT
+	     ps.id,ps.service_name,ps.create_user,ps.create_user_name,ps.update_user,ps.update_user_name,pc.id as comboId,
+		 pc.combo_name,pc.package_money,pc.package_time,pc.package_time_unit,pc.state,ps.fk_platform_id,
+		 pc.create_time,pc.update_time
+	FROM t_s_platform_service ps 
+	LEFT JOIN t_s_platform p ON ps.fk_platform_id = p.id
+	LEFT JOIN t_s_platformservice_combo pc ON pc.fk_platformservice_id = ps.id
+	WHERE 1=1 AND ps.state = 0
+	<if test="platformId != null and platformId !=''">
+	   AND ps.fk_platform_id = #{platformId,jdbcType=VARCHAR} 
+    </if>
+  </select>
+</mapper>

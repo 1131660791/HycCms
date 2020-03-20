@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmsmaterials.dao.CmsMaterialsMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsMaterials">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fk_column_id" jdbcType="VARCHAR" property="fkColumnId" />
+    <result column="materials_name" jdbcType="VARCHAR" property="materialsName" />
+    <result column="materials_link" jdbcType="VARCHAR" property="materialsLink" />
+    <result column="materials_describe" jdbcType="VARCHAR" property="materialsDescribe" />
+    <result column="charge_type" jdbcType="INTEGER" property="chargeType" />
+    <result column="materials_price" jdbcType="DOUBLE" property="materialsPrice" />
+    <result column="materials_att_name" jdbcType="VARCHAR" property="materialsAttName" />
+    <result column="materials_url" jdbcType="VARCHAR" property="materialsUrl" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="materials_arrposid" jdbcType="INTEGER" property="materialsArrposid" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="section_id" jdbcType="VARCHAR" property="sectionId" />
+    <result column="section_name" jdbcType="VARCHAR" property="sectionName" />
+    <result column="speechmaker" jdbcType="VARCHAR" property="speechmaker" />
+    <result column="learn_number" jdbcType="INTEGER" property="learnNumber" />
+    
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+  </resultMap>
+  
+  <resultMap id="BaseMaterialsVoMap" type="com.dome.bean.vo.CmsMaterialsVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fk_column_id" jdbcType="VARCHAR" property="fkColumnId" />
+    <result column="materials_name" jdbcType="VARCHAR" property="materialsName" />
+    <result column="quoteBannerFlag" jdbcType="INTEGER" property="quoteBannerFlag" />
+    <result column="materials_link" jdbcType="VARCHAR" property="materialsLink" />
+    <result column="materials_describe" jdbcType="VARCHAR" property="materialsDescribe" />
+    <result column="charge_type" jdbcType="INTEGER" property="chargeType" />
+    <result column="materials_price" jdbcType="DOUBLE" property="materialsPrice" />
+    <result column="materials_att_name" jdbcType="VARCHAR" property="materialsAttName" />
+    <result column="materials_url" jdbcType="VARCHAR" property="materialsUrl" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="materials_arrposid" jdbcType="INTEGER" property="materialsArrposid" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="section_id" jdbcType="VARCHAR" property="sectionId" />
+    <result column="section_name" jdbcType="VARCHAR" property="sectionName" />
+    <result column="speechmaker" jdbcType="VARCHAR" property="speechmaker" />
+    <result column="learn_number" jdbcType="INTEGER" property="learnNumber" />
+    
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List">
+    id, fk_column_id, materials_name, materials_link, materials_describe, charge_type, 
+    materials_price,materials_att_name, materials_url, sort, state, materials_arrposid, fk_platform_id, 
+    platform_name, hospital_id, departname,section_id,section_name,speechmaker,learn_number,
+    public_time, expire_time, create_time, update_time, create_user, create_user_name, update_user, update_user_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hyc_c_materials
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_c_materials
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.CmsMaterials">
+    insert into hyc_c_materials (id, fk_column_id, materials_name, 
+      materials_link, materials_describe, charge_type, 
+      materials_price,materials_att_name, materials_url, sort, 
+      state, materials_arrposid, fk_platform_id, learn_number,
+      platform_name, hospital_id, departname, section_id,section_name,speechmaker,
+      public_time, expire_time, create_time, 
+      update_time, create_user, create_user_name, 
+      update_user, update_user_name)
+    values (#{id,jdbcType=VARCHAR}, #{fkColumnId,jdbcType=VARCHAR}, #{materialsName,jdbcType=VARCHAR}, 
+      #{materialsLink,jdbcType=VARCHAR}, #{materialsDescribe,jdbcType=VARCHAR}, #{chargeType,jdbcType=INTEGER}, 
+      #{materialsPrice,jdbcType=DOUBLE}, #{materialsAttName,jdbcType=VARCHAR},
+      #{materialsUrl,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{materialsArrposid,jdbcType=INTEGER}, #{fkPlatformId,jdbcType=VARCHAR}, 
+      #{learnNumber,jdbcType=INTEGER}, 
+      #{platformName,jdbcType=VARCHAR}, #{hospitalId,jdbcType=VARCHAR}, #{departname,jdbcType=VARCHAR}, 
+      #{sectionId,jdbcType=VARCHAR}, #{sectionName,jdbcType=VARCHAR}, #{speechmaker,jdbcType=VARCHAR}, 
+      #{publicTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsMaterials">
+    insert into hyc_c_materials
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fkColumnId != null">
+        fk_column_id,
+      </if>
+      <if test="materialsName != null">
+        materials_name,
+      </if>
+      <if test="materialsLink != null">
+        materials_link,
+      </if>
+      <if test="materialsDescribe != null">
+        materials_describe,
+      </if>
+      <if test="chargeType != null">
+        charge_type,
+      </if>
+      <if test="materialsPrice != null">
+        materials_price,
+      </if>
+      <if test="materialsAttName != null">
+        materials_att_name,
+      </if>
+      <if test="materialsUrl != null">
+        materials_url,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="materialsArrposid != null">
+        materials_arrposid,
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id,
+      </if>
+      <if test="platformName != null">
+        platform_name,
+      </if>
+      <if test="hospitalId != null">
+        hospital_id,
+      </if>
+      <if test="departname != null">
+        departname,
+      </if>
+      <if test="sectionId != null">
+        section_id,
+      </if>
+      <if test="sectionName != null">
+        section_name,
+      </if>
+      <if test="speechmaker != null">
+        speechmaker,
+      </if>
+      <if test="learnNumber != null">
+      	learn_number,
+      </if>
+      <if test="publicTime != null">
+        public_time,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fkColumnId != null">
+        #{fkColumnId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsName != null">
+        #{materialsName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsLink != null">
+        #{materialsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsDescribe != null">
+        #{materialsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null">
+        #{chargeType,jdbcType=INTEGER},
+      </if>
+      <if test="materialsPrice != null">
+        #{materialsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="materialsAttName != null">
+         #{materialsAttName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsUrl != null">
+        #{materialsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="materialsArrposid != null">
+        #{materialsArrposid,jdbcType=INTEGER},
+      </if>
+      <if test="fkPlatformId != null">
+        #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null">
+        #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null">
+        #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionName != null">
+        #{sectionName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="speechmaker != null">
+        #{speechmaker,jdbcType=VARCHAR},
+      </if>
+      <if test="learnNumber != null">
+      	#{learnNumber,jdbcType=INTEGER},
+      </if>
+      <if test="publicTime != null">
+        #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsMaterials">
+    update hyc_c_materials
+    <set>
+      <if test="fkColumnId != null">
+        fk_column_id = #{fkColumnId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsName != null">
+        materials_name = #{materialsName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsLink != null">
+        materials_link = #{materialsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsDescribe != null">
+        materials_describe = #{materialsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null">
+        charge_type = #{chargeType,jdbcType=INTEGER},
+      </if>
+      <if test="materialsPrice != null">
+        materials_price = #{materialsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="materialsAttName != null">
+        materials_att_name  = #{materialsAttName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsUrl != null">
+        materials_url = #{materialsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="materialsArrposid != null">
+        materials_arrposid = #{materialsArrposid,jdbcType=INTEGER},
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null">
+        platform_name = #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        departname = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null">  
+        section_id = #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionName != null">
+        section_name = #{sectionName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="speechmaker != null">
+        speechmaker = #{speechmaker,jdbcType=VARCHAR},
+      </if>
+      <if test="learnNumber != null">
+      	learn_number = #{learnNumber,jdbcType=INTEGER},
+      </if>
+      <if test="publicTime != null">
+        public_time = #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsMaterials">
+    update hyc_c_materials
+    set fk_column_id = #{fkColumnId,jdbcType=VARCHAR},
+      materials_name = #{materialsName,jdbcType=VARCHAR},
+      materials_link = #{materialsLink,jdbcType=VARCHAR},
+      materials_describe = #{materialsDescribe,jdbcType=VARCHAR},
+      charge_type = #{chargeType,jdbcType=INTEGER},
+      materials_price = #{materialsPrice,jdbcType=DOUBLE},
+      materials_att_name = #{materialsAttName,jdbcType=VARCHAR},
+      materials_url = #{materialsUrl,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      materials_arrposid = #{materialsArrposid,jdbcType=INTEGER},
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      platform_name = #{platformName,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      departname = #{departname,jdbcType=VARCHAR},
+      section_id = #{sectionId,jdbcType=VARCHAR},
+      section_name = #{sectionName,jdbcType=VARCHAR}, 
+      speechmaker = #{speechmaker,jdbcType=VARCHAR},
+      learn_number = #{learnNumber,jdbcType=INTEGER},
+      public_time = #{publicTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询学习资料列表 - 分页 
+  	platformId - 平台id
+    hospitalId - 医院id
+    columnId - 栏目id
+    materialsName - 资料名称
+	startDate - 开始时间  yyyy-MM-dd HH:mm:ss 
+	endDate   - 结束时间  yyyy-MM-dd HH:mm:ss
+    state - 状态 0:已发布 1:草稿 2:待发布
+	weightOrder - 按权重排序 1：升序,2:降序
+	dataOrder - 时间排序  1:升序,2：降序
+	sortOrder - 按前台显示顺序 - 推荐 权重 时间的优先级排序 排序  0:不按此排序,1：按此排序
+  -->
+  <select id="findMaterialsListPage" parameterType="map" resultMap="BaseMaterialsVoMap"> 
+  	 SELECT 
+		CASE WHEN bn.id IS NOT NULL THEN 1 ELSE 0 END as quoteBannerFlag,m.* 
+	 FROM hyc_c_materials m 
+	 LEFT JOIN hyc_c_banner_news bn ON m.id = bn.fk_materials_id
+	 WHERE 1=1 
+	 <if test="platformId !=null and platformId !=''">
+		 AND m.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="hospitalId !=null and hospitalId !=''">
+	 	 AND m.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="columnId != null and columnId !=''">
+		 AND m.fk_column_id = #{columnId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="materialsName != null and materialsName !=''">
+		 AND m.materials_name like CONCAT('%','${materialsName}','%')
+	 </if>
+	 <if test="startDate !=null  and startDate !=''">
+		 AND m.update_time >= #{startDate,jdbcType=VARCHAR}
+	 </if>
+	 <if test="endDate !=null and endDate !=''">
+		 AND m.update_time &lt;= #{endDate,jdbcType=VARCHAR}
+	 </if>
+	 
+	 <if test="state !=null and state !=2">
+	 	 AND m.state = #{state,jdbcType=INTEGER }
+	 </if>
+	 <if test="state !=null and state ==2">
+	 	 AND (m.state = 0 AND m.public_time &lt;= #{time,jdbcType=VARCHAR})
+	 </if>
+	 
+	 <choose>
+	 	<when test="weightOrder !=null  and weightOrder !='' and weightOrder == 1"> <!-- 权重排序 升序 -->
+	 		ORDER BY m.sort ASC
+	 	</when>
+	 	<when test="weightOrder !=null  and weightOrder !='' and weightOrder == 2"> <!-- 权重排序 降序 -->
+	 		ORDER BY m.sort DESC
+	 	</when>
+	 	<when test="dataOrder != null and dataOrder !='' and dataOrder == 1"> <!-- 时间排序  1:升序 -->
+	 		ORDER BY m.update_time ASC
+	 	</when>
+	 	<when test="dataOrder != null and dataOrder !='' and dataOrder == 1"> <!-- 时间排序  2:降序 -->
+	 		ORDER BY m.update_time DESC
+	 	</when>
+	 	<when test="sortOrder != null and sortOrder !='' and sortOrder == 0"> <!-- 按前台显示顺序 - 推荐 权重 时间的优先级排序 排序  0:不按此排序,1：按此排序 -->
+	 		ORDER BY m.materials_arrposid ASC,m.sort ASC,m.update_time DESC
+	 	</when>
+	 	<when test="sortOrder != null and sortOrder !='' and sortOrder == 1"> <!-- 按前台显示顺序 - 推荐 权重 时间的优先级排序 排序  0:不按此排序,1：按此排序 -->
+	 		ORDER BY m.materials_arrposid DESC,m.sort DESC,m.update_time DESC
+	 	</when>
+	 	<otherwise>
+	 		ORDER BY m.sort ASC,m.update_time DESC
+	 	</otherwise>
+	 </choose>
+  </select>
+  
+  <!-- 查询学习资料 栏目类型 的学习资料 -->
+  <select id="findColumnMaterialsPage" parameterType="map" resultMap="BaseResultMap">
+    select 
+   	 <include refid="Base_Column_List" />
+    from hyc_c_materials m
+    where 1=1 
+    <if test="columnId != null and columnId !=''">
+		 AND m.fk_column_id = #{columnId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="materialsName != null and materialsName !=''">
+		 AND m.materials_name like CONCAT('%','${materialsName}','%')
+	 </if>
+  </select>
+  
+  <!-- 远程 查询学习资料 分页 -->
+  <select id="findRemoteMaterialsPage" parameterType="map" resultMap="BaseResultMap">
+  	  SELECT 
+  	 	* 
+  	  FROM hyc_c_materials 
+	  WHERE 1 = 1  AND state = 0
+	  AND hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	  AND fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	  <if test="materialsArrposid != null and  materialsArrposid == 1">
+	  	AND materialsArrposid = #{materialsArrposid,jdbcType=INTEGER}
+	  </if>
+	  <if test="columnId != null and  columnId != '' ">
+		AND fk_column_Id = #{columnId,jdbcType=VARCHAR}
+	  </if>
+	    ORDER BY sort DESC,update_time DESC
+  </select>
+  
+  <!-- 远程 查询学习资料 详情-->
+  <select id="findMaterialsRemote" parameterType="map" resultMap="BaseResultMap">
+  	  SELECT 
+  	 	* 
+  	  FROM hyc_c_materials 
+	  WHERE 1 = 1  
+	  AND id = #{materialsId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+</mapper>

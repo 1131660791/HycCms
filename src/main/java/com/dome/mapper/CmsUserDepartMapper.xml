@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmsuserdepart.dao.CmsUserDepartMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsUserDepart">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fk_user_id" jdbcType="VARCHAR" property="fkUserId" />
+    <result column="fk_depart_id" jdbcType="VARCHAR" property="fkDepartId" />
+  </resultMap>
+  
+   <resultMap id="BaseUserDepartsMap" type="com.dome.bean.vo.CmsUserDepartVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="mobilephone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    
+    <collection property="departs" resultMap="BaseDepartMap"/>
+  </resultMap>
+  
+  <resultMap id="BaseDepartMap" type="com.dome.bean.TSDepart">
+    <id column="fk_depart_id" jdbcType="VARCHAR" property="id" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, fk_user_id, fk_depart_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hyc_c_user_depart
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_c_user_depart
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.CmsUserDepart">
+    insert into hyc_c_user_depart (id, fk_user_id, fk_depart_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{fkUserId,jdbcType=VARCHAR}, #{fkDepartId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsUserDepart">
+    insert into hyc_c_user_depart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fkUserId != null">
+        fk_user_id,
+      </if>
+      <if test="fkDepartId != null">
+        fk_depart_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fkUserId != null">
+        #{fkUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkDepartId != null">
+        #{fkDepartId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsUserDepart">
+    update hyc_c_user_depart
+    <set>
+      <if test="fkUserId != null">
+        fk_user_id = #{fkUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkDepartId != null">
+        fk_depart_id = #{fkDepartId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsUserDepart">
+    update hyc_c_user_depart
+    set fk_user_id = #{fkUserId,jdbcType=VARCHAR},
+      fk_depart_id = #{fkDepartId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询用户 查询的单位 -->
+  <select id="findUserManageDeparts" parameterType="map" resultMap="BaseUserDepartsMap">
+   	SELECT 
+		bu.ID,bu.sex,bu.username,bu.realname,bu.mobilephone,ud.fk_depart_id,d.departname,d.create_date,GROUP_CONCAT(r.rolename) AS roleName
+	FROM ( 
+	  SELECT 
+			bu.ID,u.sex,bu.username,bu.realname,u.mobilephone 
+		FROM t_s_base_user bu 
+		INNER JOIN t_s_user u ON bu.ID = u.id 
+	) bu 
+ 	 LEFT JOIN hyc_c_user_depart ud  ON ud.fk_user_id = bu.ID
+	LEFT JOIN t_s_depart d ON d.ID = ud.fk_depart_id
+	LEFT JOIN t_s_role_user  ru ON ru.userid =  bu.ID
+	LEFT JOIN t_s_role r ON ru.roleid = r.ID 
+	WHERE 1=1 
+	<if test="userId != null">
+	   AND bu.id = #{userId,jdbcType=VARCHAR}
+	</if>
+	GROUP BY bu.ID,bu.sex,bu.username,bu.realname,bu.mobilephone,ud.fk_depart_id,d.departname,d.create_date
+  </select>
+  
+  <!-- 删除用户管理的单位 -->
+  <delete id="deleteUserDepart" parameterType="map">
+    delete from hyc_c_user_depart
+    where 1=1
+      AND fk_user_id = #{userId,jdbcType=VARCHAR}
+      AND fk_depart_id = #{departId,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 删除用户管理的所有单位 -->
+  <delete id="deleteUserAllDepart" parameterType="map">
+    delete from hyc_c_user_depart
+    where 1=1
+      AND fk_user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

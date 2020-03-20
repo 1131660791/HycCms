@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysicon.dao.TSIconMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSIcon">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="extend" jdbcType="VARCHAR" property="extend" />
+    <result column="iconclas" jdbcType="VARCHAR" property="iconclas" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="SMALLINT" property="type" />
+    <result column="content" jdbcType="LONGVARBINARY" property="content" />
+    <result column="path" jdbcType="LONGVARCHAR" property="path" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, extend, iconclas, name, type, content, path
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_s_icon
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_icon
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.TSIcon">
+    insert into t_s_icon (ID, extend, iconclas, 
+      name, type, content, 
+      path)
+    values (#{id,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR}, #{iconclas,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT}, #{content,jdbcType=LONGVARBINARY}, 
+      #{path,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.TSIcon">
+    insert into t_s_icon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="extend != null">
+        extend,
+      </if>
+      <if test="iconclas != null">
+        iconclas,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null">
+        #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="iconclas != null">
+        #{iconclas,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSIcon">
+    update t_s_icon
+    <set>
+      <if test="extend != null">
+        extend = #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="iconclas != null">
+        iconclas = #{iconclas,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dome.bean.TSIcon">
+    update t_s_icon
+    set extend = #{extend,jdbcType=VARCHAR},
+      iconclas = #{iconclas,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=SMALLINT},
+      content = #{content,jdbcType=LONGVARBINARY},
+      path = #{path,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSIcon">
+    update t_s_icon
+    set extend = #{extend,jdbcType=VARCHAR},
+      iconclas = #{iconclas,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=SMALLINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

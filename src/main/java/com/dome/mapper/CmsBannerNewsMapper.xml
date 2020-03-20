@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmsbannernews.dao.CmsBannerNewsMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsBannerNews">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fk_banner_Id" jdbcType="VARCHAR" property="fkBannerId" />
+    <result column="fk_news_Id" jdbcType="VARCHAR" property="fkNewsId" />
+    <result column="fk_video_Id" jdbcType="VARCHAR" property="fkVideoId" />
+    <result column="fk_materials_id" jdbcType="VARCHAR" property="fkMaterialsId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fk_banner_Id, fk_news_Id,fk_video_Id,fk_materials_id,type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hyc_c_banner_news
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_c_banner_news
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.CmsBannerNews">
+    insert into hyc_c_banner_news (id, fk_banner_Id, fk_news_Id,fk_video_Id,fk_materials_id,type
+      )
+    values (#{id,jdbcType=VARCHAR}, #{fkBannerId,jdbcType=VARCHAR}, #{fkNewsId,jdbcType=VARCHAR},
+     #{fkVideoId,jdbcType=VARCHAR}, #{fkMaterialsId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsBannerNews">
+    insert into hyc_c_banner_news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fkBannerId != null">
+        fk_banner_Id,
+      </if>
+      <if test="fkNewsId != null">
+        fk_news_Id,
+      </if>
+       <if test="fkVideoId != null">
+        fk_video_Id,
+      </if>
+      <if test="fkMaterialsId != null">
+      	fk_materials_id,
+      </if>
+       <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fkBannerId != null">
+        #{fkBannerId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkNewsId != null">
+        #{fkNewsId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkVideoId != null">
+        #{fkVideoId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkMaterialsId != null">
+      	#{fkMaterialsId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+         #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsBannerNews">
+    update hyc_c_banner_news
+    <set>
+      <if test="fkBannerId != null">
+        fk_banner_Id = #{fkBannerId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkNewsId != null">
+        fk_news_Id = #{fkNewsId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkVideoId != null">
+        fk_video_Id = #{fkVideoId,jdbcType=VARCHAR},
+      </if>
+      <if test="fkMaterialsId != null">
+      	fk_materials_id = #{fkMaterialsId,jdbcType=VARCHAR},
+      </if>
+       <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsBannerNews">
+    update hyc_c_banner_news
+    set fk_banner_Id = #{fkBannerId,jdbcType=VARCHAR},
+      fk_news_Id = #{fkNewsId,jdbcType=VARCHAR},
+      fk_video_Id = #{fkVideoId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询新闻关联的banner  不可删除 多个地方使用 -->
+   <select id="selectBannerNews" parameterType="map" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from hyc_c_banner_news
+    where 1=1 
+    <if test="newsId != null and newsId != ''">
+       and fk_banner_Id = #{newsId,jdbcType=VARCHAR},
+    </if>
+    <if test="videoId != null and videoId != ''">
+   	   and fk_video_Id = #{videoId,jdbcType=VARCHAR}
+    </if>
+    <if test="bannerId != null and bannerId != ''">
+       and fk_news_Id = #{bannerId,jdbcType=VARCHAR},
+    </if>
+  </select>
+  
+  <!-- 删除banner与新闻关联 -->
+  <delete id="deleteBannerNews" parameterType="map">
+    delete from hyc_c_banner_news
+    where 1=1
+    <if test="newsId != null and newsId != ''">
+      and fk_news_Id = #{newsId,jdbcType=VARCHAR}
+    </if>
+    <if test="bannerId != null and bannerId != ''">
+      and fk_banner_Id = #{bannerId,jdbcType=VARCHAR}
+    </if>
+  </delete>
+  
+  
+  <!--  删除视频banner 关联 -->
+  <delete id="deleteBannerVideo" parameterType="map">
+    delete from hyc_c_banner_news
+    where 1=1
+    <if test="videoId != null and videoId != ''">
+      and fk_video_Id = #{videoId,jdbcType=VARCHAR}
+    </if>
+    <if test="bannerId != null and bannerId != ''">
+      and fk_banner_Id = #{bannerId,jdbcType=VARCHAR}
+    </if>
+  </delete>
+  
+  <!-- 校验banner 内容是否被关联 -->
+  <select id="verifyBannerAssociatedFlag" parameterType="map" resultType="java.util.HashMap">
+  	SELECT 
+	    CASE WHEN bn.fk_news_Id IS NULL AND bn.fk_video_Id IS NULL AND bn.fk_materials_id IS NULL THEN '0' 
+	    WHEN bn.fk_news_Id IS NOT NULL  AND bn.fk_video_Id IS NULL AND bn.fk_materials_id IS NULL THEN '1'
+	    WHEN bn.fk_news_Id IS NULL  AND bn.fk_video_Id IS NOT NULL AND bn.fk_materials_id IS NULL THEN '2'
+		WHEN bn.fk_news_Id IS NULL  AND bn.fk_video_Id IS NULL AND bn.fk_materials_id IS NOT NULL THEN '3'
+	 	END as associatedFlag
+	 FROM hyc_c_banner_news bn
+	 WHERE 1=1 AND bn.fk_banner_Id = #{bannerContentId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

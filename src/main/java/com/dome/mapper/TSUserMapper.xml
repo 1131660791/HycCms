@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysuser.dao.TSUserMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobilePhone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="officePhone" jdbcType="VARCHAR" property="officephone" />
+    <result column="signatureFile" jdbcType="VARCHAR" property="signaturefile" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
+    <result column="imsign" jdbcType="VARCHAR" property="imsign" />
+    <result column="dev_flag" jdbcType="VARCHAR" property="devFlag" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="person_type" jdbcType="VARCHAR" property="personType" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="emp_no" jdbcType="VARCHAR" property="empNo" />
+    <result column="citizen_no" jdbcType="VARCHAR" property="citizenNo" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="speciality" jdbcType="VARCHAR" property="speciality" />
+    <result column="expert_type" jdbcType="VARCHAR" property="expertType" />
+    <result column="expert_title" jdbcType="VARCHAR" property="expertTitle" />
+    <result column="expert_profile" jdbcType="VARCHAR" property="expertProfile" />
+    <result column="expert_level" jdbcType="VARCHAR" property="expertLevel" />
+  </resultMap>
+  
+  <resultMap id="BaseUserVoMap" type="com.dome.bean.vo.TSUserVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobilePhone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="officePhone" jdbcType="VARCHAR" property="officephone" />
+    <result column="signatureFile" jdbcType="VARCHAR" property="signaturefile" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
+    <result column="imsign" jdbcType="VARCHAR" property="imsign" />
+    <result column="dev_flag" jdbcType="VARCHAR" property="devFlag" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="person_type" jdbcType="VARCHAR" property="personType" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="emp_no" jdbcType="VARCHAR" property="empNo" />
+    <result column="citizen_no" jdbcType="VARCHAR" property="citizenNo" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="speciality" jdbcType="VARCHAR" property="speciality" />
+    <result column="expert_type" jdbcType="VARCHAR" property="expertType" />
+    <result column="expert_title" jdbcType="VARCHAR" property="expertTitle" />
+    <result column="expert_profile" jdbcType="VARCHAR" property="expertProfile" />
+    <result column="expert_level" jdbcType="VARCHAR" property="expertLevel" />
+    <association property="tsBaseUser" javaType="com.dome.bean.TSBaseUser">   
+        <result column="baseId" jdbcType="VARCHAR" property="id" />
+	    <result column="activitiSync" jdbcType="SMALLINT" property="activitisync" />
+	    <result column="browser" jdbcType="VARCHAR" property="browser" />
+	    <result column="password" jdbcType="VARCHAR" property="password" />
+	    <result column="realname" jdbcType="VARCHAR" property="realname" />
+	    <result column="status" jdbcType="SMALLINT" property="status" />
+	    <result column="userkey" jdbcType="VARCHAR" property="userkey" />
+	    <result column="username" jdbcType="VARCHAR" property="username" />
+	    <result column="departid" jdbcType="VARCHAR" property="departid" />
+	    <result column="user_name_en" jdbcType="VARCHAR" property="userNameEn" />
+	    <result column="delete_flag" jdbcType="SMALLINT" property="deleteFlag" />
+	    <result column="expert_good_at" jdbcType="VARCHAR" property="expertGoodAt" />
+	    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+	    <result column="wy_accid" jdbcType="VARCHAR" property="wyAccid" />
+	    <result column="wy_token" jdbcType="VARCHAR" property="wyToken" />
+	    <result column="room_id" jdbcType="VARCHAR" property="roomId" />
+	    <result column="doctor_pnumber" jdbcType="VARCHAR" property="doctorPnumber" />
+	    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+	    <result column="signature" jdbcType="LONGVARBINARY" property="signature" />
+    </association>
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List">
+    id, email, mobilePhone, officePhone, signatureFile, update_name, update_date, update_by, 
+    create_name, create_date, create_by, portrait, imsign, dev_flag, user_type, person_type, 
+    sex, emp_no, citizen_no, fax, address, post, memo, speciality, expert_type, expert_title, 
+    expert_profile, expert_level
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_s_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.dome.bean.TSUser">
+    insert into t_s_user (id, email, mobilePhone, 
+      officePhone, signatureFile, update_name, 
+      update_date, update_by, create_name, 
+      create_date, create_by, portrait, 
+      imsign, dev_flag, user_type, 
+      person_type, sex, emp_no, 
+      citizen_no, fax, address, 
+      post, memo, speciality, 
+      expert_type, expert_title, expert_profile, 
+      expert_level)
+    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobilephone,jdbcType=VARCHAR}, 
+      #{officephone,jdbcType=VARCHAR}, #{signaturefile,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{portrait,jdbcType=VARCHAR}, 
+      #{imsign,jdbcType=VARCHAR}, #{devFlag,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{personType,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{empNo,jdbcType=VARCHAR}, 
+      #{citizenNo,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{post,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{speciality,jdbcType=VARCHAR}, 
+      #{expertType,jdbcType=VARCHAR}, #{expertTitle,jdbcType=VARCHAR}, #{expertProfile,jdbcType=VARCHAR}, 
+      #{expertLevel,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.dome.bean.TSUser">
+    insert into t_s_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="mobilephone != null">
+        mobilePhone,
+      </if>
+      <if test="officephone != null">
+        officePhone,
+      </if>
+      <if test="signaturefile != null">
+        signatureFile,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="portrait != null">
+        portrait,
+      </if>
+      <if test="imsign != null">
+        imsign,
+      </if>
+      <if test="devFlag != null">
+        dev_flag,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="personType != null">
+        person_type,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="empNo != null">
+        emp_no,
+      </if>
+      <if test="citizenNo != null">
+        citizen_no,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="post != null">
+        post,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="speciality != null">
+        speciality,
+      </if>
+      <if test="expertType != null">
+        expert_type,
+      </if>
+      <if test="expertTitle != null">
+        expert_title,
+      </if>
+      <if test="expertProfile != null">
+        expert_profile,
+      </if>
+      <if test="expertLevel != null">
+        expert_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null">
+        #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="officephone != null">
+        #{officephone,jdbcType=VARCHAR},
+      </if>
+      <if test="signaturefile != null">
+        #{signaturefile,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null">
+        #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="imsign != null">
+        #{imsign,jdbcType=VARCHAR},
+      </if>
+      <if test="devFlag != null">
+        #{devFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null">
+        #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null">
+        #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenNo != null">
+        #{citizenNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null">
+        #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="expertType != null">
+        #{expertType,jdbcType=VARCHAR},
+      </if>
+      <if test="expertTitle != null">
+        #{expertTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="expertProfile != null">
+        #{expertProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="expertLevel != null">
+        #{expertLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSUser">
+    update t_s_user
+    <set>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null">
+        mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="officephone != null">
+        officePhone = #{officephone,jdbcType=VARCHAR},
+      </if>
+      <if test="signaturefile != null">
+        signatureFile = #{signaturefile,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null">
+        portrait = #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="imsign != null">
+        imsign = #{imsign,jdbcType=VARCHAR},
+      </if>
+      <if test="devFlag != null">
+        dev_flag = #{devFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null">
+        person_type = #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null">
+        emp_no = #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenNo != null">
+        citizen_no = #{citizenNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null">
+        speciality = #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="expertType != null">
+        expert_type = #{expertType,jdbcType=VARCHAR},
+      </if>
+      <if test="expertTitle != null">
+        expert_title = #{expertTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="expertProfile != null">
+        expert_profile = #{expertProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="expertLevel != null">
+        expert_level = #{expertLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSUser">
+    update t_s_user
+    set email = #{email,jdbcType=VARCHAR},
+      mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      officePhone = #{officephone,jdbcType=VARCHAR},
+      signatureFile = #{signaturefile,jdbcType=VARCHAR},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      portrait = #{portrait,jdbcType=VARCHAR},
+      imsign = #{imsign,jdbcType=VARCHAR},
+      dev_flag = #{devFlag,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      person_type = #{personType,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      emp_no = #{empNo,jdbcType=VARCHAR},
+      citizen_no = #{citizenNo,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      post = #{post,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      speciality = #{speciality,jdbcType=VARCHAR},
+      expert_type = #{expertType,jdbcType=VARCHAR},
+      expert_title = #{expertTitle,jdbcType=VARCHAR},
+      expert_profile = #{expertProfile,jdbcType=VARCHAR},
+      expert_level = #{expertLevel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询用户基本信息 -->
+  <select id="findSysUserInfo" parameterType="map" resultMap="BaseUserVoMap">
+  	SELECT
+		tsu.id,tsu.email,tsu.mobilePhone,tsu.officePhone,
+		tsu.signatureFile,tsu.update_name,tsu.update_date,tsu.update_by,tsu.create_name,tsu.create_date,
+		tsu.create_by,tsu.portrait,tsu.imsign,tsu.dev_flag,tsu.user_type,tsu.person_type,tsu.sex,
+		tsu.emp_no,tsu.citizen_no,tsu.fax,tsu.address,tsu.post,tsu.memo,tsu.speciality,tsu.expert_type,
+		tsu.expert_title,tsu.expert_profile,tsu.expert_level,tsbu.ID AS baseId,tsbu.activitiSync,
+		tsbu.browser,tsbu.PASSWORD,tsbu.realname,tsbu.signature,tsbu.STATUS,tsbu.userkey,
+		tsbu.username,tsbu.departid,tsbu.user_name_en,tsbu.delete_flag,tsbu.expert_good_at,
+		tsbu.hospital_id,tsbu.wy_accid,tsbu.wy_token,tsbu.room_id,tsbu.doctor_pnumber,tsbu.nick_name
+	FROM t_s_user tsu
+	INNER JOIN t_s_base_user tsbu ON tsu.id = tsbu.ID
+	WHERE 1=1 AND tsbu.username = #{loginName,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查看医生信息 -->
+  <select id="findDoctorInfo" parameterType="map" resultType="java.util.HashMap">
+		SELECT
+		  u.id, u.email, u.mobilePhone, u.officePhone, u.signatureFile, u.update_name as updateName, u.update_date as updateDate,
+		  u.update_by as updateBy, u.create_name as createName, u.create_date as createDate, u.create_by as createBy, u.portrait, 
+		  u.imsign, u.dev_flag as devFlag,u.user_type as userType, u.person_type as personType, u.sex, 
+		  u.emp_no as empNo, u.citizen_no as citizenNo,u.fax, u.address,
+		  u.post, u.memo,u.speciality, u.expert_type as expertType,u.expert_title as expertTitle, 
+		  u.expert_profile as expertProfile,u.expert_level as expertLevel,
+		  bu.activitiSync, bu.browser, bu.PASSWORD, bu.realname, bu.signature, bu.STATUS,
+		  bu.userkey,bu.username,bu.departid, bu.user_name_en as userNameEn,bu.delete_flag as deleteFlag,
+		  bu.expert_good_at as expertGoodAt,bu.hospital_id as hospitalId, bu.wy_accid as wyAccid, 
+		  bu.wy_token as wyToken,bu.room_id as roomId,bu.doctor_pnumber as doctorPnumber,
+		  bu.nick_name as nickName,bu.hospitalName,
+		  GROUP_CONCAT(d.departname) as departname
+		FROM (
+			SELECT bu.*,s.departname as hospitalName FROM  t_s_base_user bu
+			LEFT JOIN t_s_depart s ON s.ID = bu.hospital_id 
+		) bu 
+		INNER JOIN t_s_user u ON bu.id = u.id
+		LEFT JOIN t_s_depart d ON bu.departid = d.ID 
+		WHERE  1=1 
+		<if test="doctorId !=null and doctorId !=''">
+			AND bu.ID = #{doctorId,jdbcType=VARCHAR}
+		</if>
+		<if test="hospitalId !=null and hospitalId !=''">
+		    AND bu.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+		</if>
+		GROUP BY  u.id, u.email, u.mobilePhone, u.officePhone, u.signatureFile, u.update_name, u.update_date,
+		  u.update_by, u.create_name, u.create_date, u.create_by, u.portrait, u.imsign, u.dev_flag,
+		  u.user_type, u.person_type, u.sex,  u.emp_no, u.citizen_no,u.fax, u.address,
+		  u.post, u.memo,u.speciality, u.expert_type,u.expert_title, u.expert_profile,u.expert_level,
+		  bu.activitiSync, bu.browser, bu. PASSWORD, bu.realname, bu.signature, bu. STATUS,
+		  bu.userkey,bu.username,bu.departid, bu.user_name_en,bu.delete_flag,bu.expert_good_at,
+		  bu.hospital_id, bu.wy_accid, bu.wy_token, bu.room_id, bu.doctor_pnumber, bu.nick_name
+  </select>
+  
+  <!-- 查询所有用户 -->
+  <select id="findUsersPage" parameterType="map" resultMap="BaseUserVoMap">
+	  	SELECT
+			tsu.id,tsu.email,tsu.mobilePhone,tsu.officePhone,
+			tsu.signatureFile,tsu.update_name,tsu.update_date,tsu.update_by,tsu.create_name,tsu.create_date,
+			tsu.create_by,tsu.portrait,tsu.imsign,tsu.dev_flag,tsu.user_type,tsu.person_type,tsu.sex,
+			tsu.emp_no,tsu.citizen_no,tsu.fax,tsu.address,tsu.post,tsu.memo,tsu.speciality,tsu.expert_type,
+			tsu.expert_title,tsu.expert_profile,tsu.expert_level,tsbu.ID AS baseId,tsbu.activitiSync,
+			tsbu.browser,tsbu.PASSWORD,tsbu.realname,tsbu.signature,tsbu.STATUS,tsbu.userkey,
+			tsbu.username,tsbu.departid,tsbu.user_name_en,tsbu.delete_flag,tsbu.expert_good_at,
+			tsbu.hospital_id,tsbu.wy_accid,tsbu.wy_token,tsbu.room_id,tsbu.doctor_pnumber,tsbu.nick_name
+		FROM t_s_user tsu
+		INNER JOIN t_s_base_user tsbu ON tsu.id = tsbu.ID
+		INNER JOIN t_s_role_user ru ON ru.userid = tsu.id
+		INNER JOIN t_s_role r ON r.ID = ru.roleid
+		WHERE 1=1 AND r.role_type = 0
+		<if test="userName !=null and userName != ''">
+			AND (tsbu.realname like CONCAT('%','${userName}','%') OR tsu.mobilephone like CONCAT('%','${userName}','%'))
+		</if>	
+		<if test="startDate !=null and startDate !=''">
+			AND tsu.update_date >= #{startDate,jdbcType=VARCHAR}
+		</if>
+		<if test="endDate !=null and endDate !=''">
+			AND tsu.update_date &lt;= #{endDate,jdbcType=VARCHAR}
+		</if>
+  </select>
+  
+  
+</mapper>

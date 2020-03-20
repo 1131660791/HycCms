@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmsnews.dao.CmsNewsMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsNews">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fk_column_Id" jdbcType="VARCHAR" property="fkColumnId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="news_name" jdbcType="VARCHAR" property="newsName" />
+    <result column="news_writer" jdbcType="VARCHAR" property="newsWriter" />
+    <result column="news_keyword" jdbcType="VARCHAR" property="newsKeyword" />
+    <result column="news_source" jdbcType="VARCHAR" property="newsSource" />
+    <result column="cover_link" jdbcType="VARCHAR" property="coverLink" />
+    <result column="news_digest" jdbcType="VARCHAR" property="newsDigest" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="news_arrposid" jdbcType="INTEGER" property="newsArrposid" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dome.bean.CmsNews">
+    <result column="news_content" jdbcType="LONGVARCHAR" property="newsContent" />
+  </resultMap>
+  
+  <!-- 新闻Vo -->
+  <resultMap id="BaseNewsVoMap" type="com.dome.bean.vo.CmsNewsVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="quoteBannerFlag" jdbcType="INTEGER" property="quoteBannerFlag" />
+    
+    <result column="news_name" jdbcType="VARCHAR" property="newsName" />
+    <result column="news_writer" jdbcType="VARCHAR" property="newsWriter" />
+    <result column="news_keyword" jdbcType="VARCHAR" property="newsKeyword" />
+    <result column="news_source" jdbcType="VARCHAR" property="newsSource" />
+    <result column="cover_link" jdbcType="VARCHAR" property="coverLink" />
+    <result column="news_digest" jdbcType="VARCHAR" property="newsDigest" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="news_content" jdbcType="LONGVARCHAR" property="newsContent" />
+    <result column="news_arrposid" jdbcType="INTEGER" property="newsArrposid" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <association property="column" javaType="com.dome.bean.CmsColumn"> 
+	    <id column="fk_column_Id" jdbcType="VARCHAR" property="id" />
+	    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    </association>
+    <association property="baseUser" javaType="com.dome.bean.TSBaseUser"> 
+	    <id column="create_user" jdbcType="VARCHAR" property="id" />
+	    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, fk_column_Id, state, news_name, news_writer, news_keyword, news_source, cover_link, 
+    news_digest, sort, news_arrposid, fk_platform_id, platform_name, hospital_id, departname, 
+    public_time, expire_time, create_time, update_time,create_user,update_user,
+    create_user_name,update_user_name
+  </sql>
+  
+  <sql id="Blob_Column_List">
+    news_content
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hyc_c_news
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_c_news
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.dome.bean.CmsNews">
+    insert into hyc_c_news (id, fk_column_Id, state, 
+      news_name, news_writer, news_keyword, 
+      news_source, cover_link, news_digest, 
+      sort, news_arrposid, fk_platform_id, 
+      platform_name, hospital_id, departname, 
+      public_time, expire_time, create_time, 
+      update_time, news_content,create_user,update_user,
+      create_user_name,update_user_name)
+    values (#{id,jdbcType=VARCHAR}, #{fkColumnId,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{newsName,jdbcType=VARCHAR}, #{newsWriter,jdbcType=VARCHAR}, #{newsKeyword,jdbcType=VARCHAR}, 
+      #{newsSource,jdbcType=VARCHAR}, #{coverLink,jdbcType=VARCHAR}, #{newsDigest,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{newsArrposid,jdbcType=INTEGER}, #{fkPlatformId,jdbcType=VARCHAR}, 
+      #{platformName,jdbcType=VARCHAR}, #{hospitalId,jdbcType=VARCHAR}, #{departname,jdbcType=VARCHAR}, 
+      #{publicTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{newsContent,jdbcType=LONGVARCHAR},
+      #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
+      #{createUserName,jdbcType=VARCHAR},#{updateUserName,jdbcType=VARCHAR}  )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsNews">
+    insert into hyc_c_news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fkColumnId != null">
+        fk_column_Id,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="newsName != null">
+        news_name,
+      </if>
+      <if test="newsWriter != null">
+        news_writer,
+      </if>
+      <if test="newsKeyword != null">
+        news_keyword,
+      </if>
+      <if test="newsSource != null">
+        news_source,
+      </if>
+      <if test="coverLink != null">
+        cover_link,
+      </if>
+      <if test="newsDigest != null">
+        news_digest,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="newsArrposid != null">
+        news_arrposid,
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id,
+      </if>
+      <if test="platformName != null">
+        platform_name,
+      </if>
+      <if test="hospitalId != null">
+        hospital_id,
+      </if>
+      <if test="departname != null">
+        departname,
+      </if>
+      <if test="publicTime != null">
+        public_time,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="newsContent != null">
+        news_content,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fkColumnId != null">
+        #{fkColumnId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="newsName != null">
+        #{newsName,jdbcType=VARCHAR},
+      </if>
+      <if test="newsWriter != null">
+        #{newsWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="newsKeyword != null">
+        #{newsKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSource != null">
+        #{newsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="coverLink != null">
+        #{coverLink,jdbcType=VARCHAR},
+      </if>
+      <if test="newsDigest != null">
+        #{newsDigest,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="newsArrposid != null">
+        #{newsArrposid,jdbcType=INTEGER},
+      </if>
+      <if test="fkPlatformId != null">
+        #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null">
+        #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="publicTime != null">
+        #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newsContent != null">
+        #{newsContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR}, 
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsNews">
+    update hyc_c_news
+    <set>
+      <if test="fkColumnId != null">
+        fk_column_Id = #{fkColumnId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="newsName != null">
+        news_name = #{newsName,jdbcType=VARCHAR},
+      </if>
+      <if test="newsWriter != null">
+        news_writer = #{newsWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="newsKeyword != null">
+        news_keyword = #{newsKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSource != null">
+        news_source = #{newsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="coverLink != null">
+        cover_link = #{coverLink,jdbcType=VARCHAR},
+      </if>
+      <if test="newsDigest != null">
+        news_digest = #{newsDigest,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="newsArrposid != null">
+        news_arrposid = #{newsArrposid,jdbcType=INTEGER},
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null">
+        platform_name = #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        departname = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="publicTime != null">
+        public_time = #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newsContent != null">
+        news_content = #{newsContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dome.bean.CmsNews">
+    update hyc_c_news
+    set fk_column_Id = #{fkColumnId,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      news_name = #{newsName,jdbcType=VARCHAR},
+      news_writer = #{newsWriter,jdbcType=VARCHAR},
+      news_keyword = #{newsKeyword,jdbcType=VARCHAR},
+      news_source = #{newsSource,jdbcType=VARCHAR},
+      cover_link = #{coverLink,jdbcType=VARCHAR},
+      news_digest = #{newsDigest,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      news_arrposid = #{newsArrposid,jdbcType=INTEGER},
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      platform_name = #{platformName,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      departname = #{departname,jdbcType=VARCHAR},
+      public_time = #{publicTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      news_content = #{newsContent,jdbcType=LONGVARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},  
+      update_user = #{updateUser,jdbcType=VARCHAR}
+      
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsNews">
+      state = #{state,jdbcType=INTEGER},
+      news_name = #{newsName,jdbcType=VARCHAR},
+      news_writer = #{newsWriter,jdbcType=VARCHAR},
+      news_keyword = #{newsKeyword,jdbcType=VARCHAR},
+      news_source = #{newsSource,jdbcType=VARCHAR},
+      cover_link = #{coverLink,jdbcType=VARCHAR},
+      news_digest = #{newsDigest,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      news_arrposid = #{newsArrposid,jdbcType=INTEGER},
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      platform_name = #{platformName,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      departname = #{departname,jdbcType=VARCHAR},
+      public_time = #{publicTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR}, 
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询新闻 -->
+  <select id="findNews" parameterType="map" resultMap="BaseNewsVoMap">
+  	SELECT
+		n.*,c.column_name 
+	FROM hyc_c_news n
+	LEFT JOIN hyc_c_column c ON n.fk_column_Id = c.id 
+	WHERE n.id = #{newsId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询新闻列表 -->
+  <select id="findNewsListPage" parameterType="map" resultMap="BaseNewsVoMap">
+  	 SELECT 
+		CASE WHEN bn.id IS NOT NULL THEN 1 ELSE 0 END as quoteBannerFlag,n.*,c.column_name,bu.realname
+	 FROM hyc_c_news n 
+	 LEFT JOIN hyc_c_column c ON n.fk_column_Id = c.id 
+	 LEFT JOIN t_s_base_user bu ON n.create_user = bu.ID
+	 LEFT JOIN hyc_c_banner_news bn ON bn.fk_news_Id = n.id
+	 WHERE 1=1
+	 <if test="hospitalId != null and hospitalId != '' ">
+	 	and n.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="columnId != null and  columnId != '' ">
+	 	and n.fk_column_Id = #{columnId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="platformId != null and  platformId != '' ">
+	 	and n.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	 </if>
+	 <if test="newsName != null and newsName  != '' ">
+	 	and n.news_name like CONCAT('%','${newsName}','%')
+	 </if>
+	 <if test="state != null ">
+	 	and n.state = #{state,jdbcType=INTEGER}
+	 </if>
+	 
+	 <if test="startDate != null and startDate != '' ">
+	 	and n.update_time >= #{startDate,jdbcType=VARCHAR}
+	 </if>
+	 <if test="endDate != null and endDate != '' ">
+	 	and n.update_time &lt;= #{endDate,jdbcType=VARCHAR}
+	 </if>
+	 
+	 <choose>
+	 	 <when test="weightOrder !=null and weightOrder !='' and weightOrder == 1"> <!-- 按权重排序  1:升序,2：降序 -->
+	 	 	ORDER BY n.sort ASC,n.update_time ASC 
+	 	 </when>
+	 	 <when test="weightOrder !=null and weightOrder !='' and weightOrder == 2"> <!-- 按权重排序  1:升序,2：降序 -->
+	 	 	ORDER BY n.sort DESC,n.update_time DESC
+	 	 </when>
+         <when test="dataOrder != null and dataOrder !='' and dataOrder == 1"> <!-- 按时间升序 -->
+             ORDER BY n.update_time ASC
+         </when>
+         <when test="dataOrder != null and dataOrder !='' and dataOrder == 2"> <!-- 按时间降序 -->
+             ORDER BY n.update_time DESC
+         </when>
+         <when test="sortOrder != null and sortOrder == 1"> <!-- 点击按 排序 排序 -->
+            ORDER BY n.news_arrposid ASC,n.sort ASC,n.update_time DESC
+         </when>
+         <otherwise> <!-- 默认按时间降序排序 -->
+         	ORDER BY n.sort ASC,n.update_time DESC
+         </otherwise>
+     </choose>
+  </select>
+  
+  <!-- 查询banner新闻 -->
+  <select id="findBannerNewsPage" parameterType="map" resultMap="BaseResultMap">
+ 	  SELECT
+		 n.*
+	  FROM hyc_c_news n
+	  WHERE 1=1 and n.state = 0
+	  <if test="columnId != null and columnId != '' ">
+	   	  and n.fk_column_Id = #{columnId,jdbcType=VARCHAR}
+	  </if>
+	  <if test="newsName != null and newsName  != '' ">
+	 	  and n.news_name like CONCAT('%','${newsName}','%')
+	 </if>
+  </select>
+  
+  <!-- 远程调用 - 查询新闻列表 -->
+  <select id="findRemoteNews" parameterType="map" resultMap="BaseResultMap">
+	  SELECT
+		* 
+	  FROM hyc_c_news
+	  WHERE 1 = 1 
+	  AND hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	  AND fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	  AND news_arrposid = #{newsArrposid,jdbcType=INTEGER}
+	  <if test="columnId != null and  columnId != '' ">
+		and fk_column_Id = #{columnId,jdbcType=VARCHAR}
+	  </if>
+	    ORDER BY sort DESC,update_time DESC
+  </select>
+  
+  <!-- 远程调用 - 查询新闻列表 -->
+  <select id="findRemoteNewsPage" parameterType="map" resultMap="BaseResultMap">
+	  SELECT
+		* 
+	  FROM hyc_c_news
+	  WHERE 1 = 1  and state = 0
+	  AND hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	  AND fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	  <if test="newsArrposid != null and  newsArrposid == 1">
+	  	AND news_arrposid = #{newsArrposid,jdbcType=INTEGER}
+	  </if>
+	  <if test="columnId != null and  columnId != '' ">
+		AND fk_column_Id = #{columnId,jdbcType=VARCHAR}
+	  </if>
+	    ORDER BY sort DESC,update_time DESC
+  </select>
+  
+  <!-- 根据栏目id 查询栏目下的新闻 -->
+  <select id="findColumnNewsByColumId" parameterType="map" resultMap="BaseResultMap">
+  	  SELECT
+		* 
+	  FROM hyc_c_news
+	  WHERE 1 = 1 
+	  AND fk_column_Id = #{columId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

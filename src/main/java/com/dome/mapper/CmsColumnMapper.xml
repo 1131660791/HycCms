@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmscolumn.dao.CmsColumnMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsColumn">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="column_id" jdbcType="VARCHAR" property="columnId" />
+    <result column="p_id" jdbcType="VARCHAR" property="pId" />
+    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    <result column="fk_column_type_id" jdbcType="VARCHAR" property="fkColumnTypeId" />
+    <result column="column_property" jdbcType="INTEGER" property="columnProperty" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="column_code" jdbcType="VARCHAR" property="columnCode" />
+    <result column="column_link" jdbcType="VARCHAR" property="columnLink" />
+    <result column="column_url" jdbcType="VARCHAR" property="columnUrl" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <!-- 栏目vo -->
+  <resultMap id="BaseColumnVoMap" type="com.dome.bean.vo.CmsColumnVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="column_id" jdbcType="VARCHAR" property="columnId" />
+    <result column="p_id" jdbcType="VARCHAR" property="pId" />
+    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="column_code" jdbcType="VARCHAR" property="columnCode" />
+    <result column="column_property" jdbcType="INTEGER" property="columnProperty" />
+    <result column="column_link" jdbcType="VARCHAR" property="columnLink" />
+    <result column="column_url" jdbcType="VARCHAR" property="columnUrl" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <association property="columnType" javaType="com.dome.bean.CmsColumnType"> 
+	    <id column="fk_column_type_id" jdbcType="VARCHAR" property="id" />
+	    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+	    <result column="columnTypeState" jdbcType="INTEGER" property="state" />
+	    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+	    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </association>
+    <association property="tsPlatform" javaType="com.dome.bean.TSPlatform"> 
+	    <id column="fk_platform_id" jdbcType="VARCHAR" property="id" />
+	    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+	    <result column="platformState" jdbcType="VARCHAR" property="state" />
+	    <result column="platform_url" jdbcType="VARCHAR" property="platformUrl" />
+	    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+	    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, column_id, p_id, column_name, fk_column_type_id, state,column_code, column_link, column_url,column_property, create_user,create_user_name,
+    update_user,update_user_name,fk_platform_id, hospital_id, departname, sort, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hyc_c_column
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_c_column
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.CmsColumn">
+    insert into hyc_c_column (id,column_id, p_id, column_name, 
+      fk_column_type_id, state,column_code, column_link, column_property,
+      column_url, create_user,create_user_name,update_user,update_user_name, fk_platform_id, 
+      hospital_id, departname, sort, 
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{columnId,jdbcType=VARCHAR},#{pId,jdbcType=VARCHAR}, #{columnName,jdbcType=VARCHAR}, 
+      #{fkColumnTypeId,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},#{columnCode,jdbcType=VARCHAR},
+       #{columnLink,jdbcType=VARCHAR}, 
+      #{columnProperty,jdbcType=VARCHAR}, #{columnUrl,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR},
+      #{update_user,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, 
+      #{fkPlatformId,jdbcType=VARCHAR}, #{hospitalId,jdbcType=VARCHAR}, 
+      #{departname,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsColumn">
+    insert into hyc_c_column
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="columnId != null">
+        column_id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="columnName != null">
+        column_name,
+      </if>
+      <if test="fkColumnTypeId != null">
+        fk_column_type_id,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="columnCode != null">
+        column_code,
+      </if>
+      <if test="columnLink != null">
+        column_link,
+      </if>
+      <if test="columnUrl != null">
+        column_url,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+    	update_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateUserName != null">
+    	update_user_name,
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id,
+      </if>
+      <if test="hospitalId != null">
+        hospital_id,
+      </if>
+      <if test="departname != null">
+        departname,
+      </if>
+      <if test="columnProperty != null">
+        column_property,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="columnId != null">
+        #{columnId,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="columnName != null">
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="fkColumnTypeId != null">
+        #{fkColumnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="columnCode != null">
+        #{columnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="columnLink != null">
+        #{columnLink,jdbcType=VARCHAR},
+      </if>
+      <if test="columnUrl != null">
+        #{columnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+    	#{updateUser,jdbcType=VARCHAR},
+      </if>
+       <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+    	#{updateUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="fkPlatformId != null">
+        #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="columnProperty != null">
+        #{columnProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsColumn">
+    update hyc_c_column
+    <set>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="columnId != null">
+        column_id = #{columnId,jdbcType=VARCHAR},
+      </if>
+      <if test="columnName != null">
+        column_name = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="fkColumnTypeId != null">
+        fk_column_type_id = #{fkColumnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="columnCode != null">
+        column_code = #{columnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="columnLink != null">
+        column_link = #{columnLink,jdbcType=VARCHAR},
+      </if>
+      <if test="columnUrl != null">
+        column_url = #{columnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+    	update_user_name = #{updateUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="columnProperty != null">
+        column_property = #{columnProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+    	update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        departname = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsColumn">
+    update hyc_c_column
+    set p_id = #{pId,jdbcType=VARCHAR},
+      column_id = #{columnId,jdbcType=VARCHAR},
+      column_name = #{columnName,jdbcType=VARCHAR},
+      fk_column_type_id = #{fkColumnTypeId,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      column_code = #{columnCode,jdbcType=VARCHAR},
+      column_link = #{columnLink,jdbcType=VARCHAR},
+      column_url = #{columnUrl,jdbcType=VARCHAR},
+      column_property = #{columnProperty,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+   	  update_user_name = #{updateUserName,jdbcType=VARCHAR}, 
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      departname = #{departname,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询栏目Id -->
+  <select id="findColumnById" parameterType="java.lang.String" resultMap="BaseColumnVoMap">
+    select 
+	   	 c.*,p.platform_name,p.platform_url,p.state as platformState,ct.type_name,ct.state as columnTypeState
+	from hyc_c_column c
+	LEFT JOIN t_s_platform p ON p.id = c.fk_platform_id
+	LEFT JOIN hyc_c_column_type ct ON ct.id = c.fk_column_type_id
+    where c.id = #{columId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询医院栏目 -->
+  <select id="findHospitalColumn" parameterType="map" resultMap="BaseColumnVoMap">
+	select 
+	   	 c.*,p.platform_name,p.platform_url,p.state as platformState,ct.type_name,ct.state as columnTypeState
+	from hyc_c_column c
+	LEFT JOIN t_s_platform p ON p.id = c.fk_platform_id
+	LEFT JOIN hyc_c_column_type ct ON ct.id = c.fk_column_type_id
+	WHERE 1=1 
+	<if test="platformId !='' and platformId != null">
+	  AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	</if>
+	<if test="hospitalId !='' and hospitalId != null">
+	  AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	</if>
+	ORDER BY c.sort ASC
+  </select>
+  
+  <!-- 查询新闻类型栏目 -->
+  <select id="findColumnByNews" parameterType="map" resultMap="BaseResultMap">
+  	 SELECT * FROM hyc_c_column c
+  	 WHERE c.fk_column_type_id = '192880e64e1ef94d014e1efefc340003'
+  	<if test="platformId !='' and platformId != null">
+	  AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	</if>
+	<if test="hospitalId !='' and hospitalId != null">
+	  AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  <!-- 查询平台 机构 的栏目 -->
+  <select id="findPlatformHospitalByColumn" parameterType="map" resultMap="BaseResultMap">
+  	SELECT * FROM hyc_c_column c 
+  	 WHERE 1=1
+  	<if test="platformId !='' and platformId != null">
+	  	AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	</if>
+	<if test="hospitalId !='' and hospitalId != null">
+	 	 AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  <!-- 根据栏目平台id 医院id 栏目类型 查询栏目 -->
+  <select id="findPHColumnTypeByColumn" parameterType="map" resultMap="BaseResultMap">
+   	 SELECT * FROM hyc_c_column c 
+  	 WHERE 1=1
+  	<if test="platformId !='' and platformId != null">
+	  	 AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	</if>
+	<if test="hospitalId !='' and hospitalId != null">
+	 	 AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	</if>
+	<if test="columnTypeId !='' and columnTypeId != null">
+	 	 AND c.fk_column_type_id = #{columnTypeId,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  <!-- 远程查看 - 查询  医院 栏目   -->
+  <select id="findRemoteColumns" parameterType="map" resultMap="BaseColumnVoMap">
+ 	 select 
+	   	 c.*,p.platform_name,p.platform_url,p.state as platformState,ct.type_name,ct.state as columnTypeState
+	 from hyc_c_column c
+	 LEFT JOIN t_s_platform p ON p.id = c.fk_platform_id
+	 LEFT JOIN hyc_c_column_type ct ON ct.id = c.fk_column_type_id
+  	 WHERE 1=1 AND c.state = 0
+  	<if test="platformId !='' and platformId != null">
+	  	 AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+	</if>
+	<if test="hospitalId !='' and hospitalId != null">
+	 	 AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	</if>
+	<choose>
+        <when test="columnPId !='' and columnPId != null">
+            AND (c.p_id = #{columnPId,jdbcType=VARCHAR} or c.column_id = #{columnPId,jdbcType=VARCHAR})
+        </when>
+        <otherwise>
+            AND (c.p_id in (
+					select c.id  from hyc_c_column c
+					where   c.fk_platform_id =  #{platformId,jdbcType=VARCHAR}
+					AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+					AND (c.p_id = '' OR c.p_id IS NULL)
+				)
+				OR  (c.p_id = '' OR c.p_id IS NULL)
+			)
+        </otherwise>
+    </choose>
+	ORDER BY c.sort ASC,c.update_time ASC
+  </select>
+  
+  <!-- 删除平台默认栏目 -->
+  <delete id="deletePlatformDefaultColumn" parameterType="map">
+  	 delete from hyc_c_column where fk_platform_id = #{platformId,jdbcType=VARCHAR}
+  	 AND hospital_id = #{hospitalId,jdbcType=VARCHAR}
+  	 AND column_property = 1
+  </delete>
+  
+  <!-- 根据栏目类型查询栏目 -->
+  <select id="findColumnByType" parameterType="map" resultMap="BaseResultMap">
+	   	SELECT * FROM hyc_c_column c 
+	  	 WHERE 1=1
+	  	<if test="platformId !='' and platformId != null">
+		  	 AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+		</if>
+		<if test="hospitalId !='' and hospitalId != null">
+		 	 AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+		</if>
+		<if test="columnTypeId !='' and columnTypeId != null">
+		 	 AND c.fk_column_type_id = #{columnTypeId,jdbcType=VARCHAR}
+		</if>
+  </select>
+  
+  <!-- 验证栏目code -->
+  <select id="verifyColumnCode" parameterType="map" resultMap="BaseResultMap">
+  	SELECT 
+  		dc.*
+  	FROM hyc_c_column dc 
+  	WHERE 1=1 AND dc.state = 0
+  	AND dc.column_code = #{columnCode,jdbcType=VARCHAR}
+  	<if test="platformId != null">
+        AND dc.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+    </if>
+    <if test="hospitalId !='' and hospitalId != null">
+	 	 AND dc.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+	</if>
+   	<if test="columnId != null">
+   		AND dc.id != #{columnId,jdbcType=VARCHAR}
+   	</if>
+  </select>
+                                                                                                                                                                                                                                                                   
+  <!-- 查询栏目下的子栏目 -->
+  <select id="findSonColumn" parameterType="map" resultMap="BaseResultMap">
+	SELECT 
+	  * 
+	FROM hyc_c_column c
+	WHERE 1=1
+	<if test="columId != null">
+		AND c.p_id = #{columId,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  
+</mapper>

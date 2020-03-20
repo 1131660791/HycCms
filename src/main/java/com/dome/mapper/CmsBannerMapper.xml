@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.cmsbanner.dao.CmsBannerMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.CmsBanner">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="banner_theme" jdbcType="VARCHAR" property="bannerTheme" />
+    <result column="fk_column_id" jdbcType="VARCHAR" property="fkColumnId" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="fkPlatformId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="public_user" jdbcType="VARCHAR" property="publicUser" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="BaseBannerVoMap" type="com.dome.bean.vo.CmsBannerVo">
+   <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="banner_theme" jdbcType="VARCHAR" property="bannerTheme" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="public_user" jdbcType="VARCHAR" property="publicUser" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <association property="column" javaType="com.dome.bean.CmsColumn"> 
+	    <id column="fk_column_id" jdbcType="VARCHAR" property="id" />
+    </association>
+    <association property="platform" javaType="com.dome.bean.TSPlatform"> 
+	    <id column="fk_platform_id" jdbcType="VARCHAR" property="id" />
+	</association>
+	
+	<collection property="bannerContents" resultMap="BaseBannerContentMap" />
+  </resultMap>
+ 
+  <!-- banner内容 -->
+  <resultMap id="BaseBannerContentMap" type="com.dome.bean.vo.CmsBannerContentVo">
+    <id column="bannerContentId" jdbcType="VARCHAR" property="id" />
+    <result column="fk_banner_Id" jdbcType="VARCHAR" property="fkBannerId" />
+    <result column="banner_keyword" jdbcType="VARCHAR" property="bannerKeyword" />
+    <result column="banner_name" jdbcType="VARCHAR" property="bannerName" />
+    <result column="banner_url" jdbcType="VARCHAR" property="bannerUrl" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="banner_link_flag" jdbcType="INTEGER" property="bannerLinkFlag" />
+    <result column="banner_link" jdbcType="VARCHAR" property="bannerLink" />
+    <result column="banner_target" jdbcType="VARCHAR" property="bannerTarget" />
+    <result column="quote_flag" jdbcType="INTEGER" property="quoteFlag" />
+    
+    <result column="newsId" jdbcType="VARCHAR" property="newsId" />
+    <result column="news_name" jdbcType="VARCHAR" property="newsName" />
+    <result column="news_columnId" jdbcType="VARCHAR" property="newsColumnId" />
+	<result column="news_column_name" jdbcType="VARCHAR" property="newscolumnName" />
+  </resultMap>
+  
+  <!-- 通用栏目banerVo -->
+  <resultMap id="BaseColumnBannerVoMap" type="com.dome.web.cmsbanner.vo.ColumnBannerVo">
+    <result column="columnId" jdbcType="VARCHAR" property="columnId" />
+    <result column="columnRawId" jdbcType="VARCHAR" property="columnRawId" />
+    <result column="column_p_id" jdbcType="VARCHAR" property="columnPId" />
+    <result column="banner_theme" jdbcType="VARCHAR" property="bannerTheme" />
+    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    <result column="hospitalId" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="fk_platform_id" jdbcType="VARCHAR" property="platformId" />
+    <result column="platform_name" jdbcType="VARCHAR" property="platformName" />
+    
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="bannerCount" jdbcType="INTEGER" property="bannerCount" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+  
+			
+  
+  <sql id="Base_Column_List">
+    id, banner_theme, fk_column_id, hospital_id, departname, fk_platform_id, state, public_time, 
+    public_user, expire_time, create_user,create_user_name,update_user_name, update_user, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hyc_c_banner
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hyc_c_banner
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.CmsBanner">
+    insert into hyc_c_banner (id, banner_theme, fk_column_id, 
+      hospital_id, departname, fk_platform_id, 
+      state, public_time, public_user, 
+      expire_time, create_user, update_user, create_user_name,update_user_name,
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{bannerTheme,jdbcType=VARCHAR}, #{fkColumnId,jdbcType=VARCHAR}, 
+      #{hospitalId,jdbcType=VARCHAR}, #{departname,jdbcType=VARCHAR}, #{fkPlatformId,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{publicTime,jdbcType=TIMESTAMP}, #{publicUser,jdbcType=VARCHAR}, 
+      #{expireTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
+      #{createUserName,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.CmsBanner" useGeneratedKeys="true" keyProperty="id">
+    insert into hyc_c_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bannerTheme != null">
+        banner_theme,
+      </if>
+      <if test="fkColumnId != null">
+        fk_column_id,
+      </if>
+      <if test="hospitalId != null">
+        hospital_id,
+      </if>
+      <if test="departname != null">
+        departname,
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="publicTime != null">
+        public_time,
+      </if>
+      <if test="publicUser != null">
+        public_user,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerTheme != null">
+        #{bannerTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="fkColumnId != null">
+        #{fkColumnId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="publicTime != null">
+        #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publicUser != null">
+        #{publicUser,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.CmsBanner">
+    update hyc_c_banner
+    <set>
+      <if test="bannerTheme != null">
+        banner_theme = #{bannerTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="fkColumnId != null">
+        fk_column_id = #{fkColumnId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        departname = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="fkPlatformId != null">
+        fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="publicTime != null">
+        public_time = #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publicUser != null">
+        public_user = #{publicUser,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR}, 
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.CmsBanner">
+    update hyc_c_banner
+    set banner_theme = #{bannerTheme,jdbcType=VARCHAR},
+      fk_column_id = #{fkColumnId,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      departname = #{departname,jdbcType=VARCHAR},
+      fk_platform_id = #{fkPlatformId,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      public_time = #{publicTime,jdbcType=TIMESTAMP},
+      public_user = #{publicUser,jdbcType=VARCHAR},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR}, 
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询banner -->
+  <select id="findBanner" parameterType="map" resultMap="BaseBannerVoMap">
+  		SELECT 
+  			b.*,bc.id as bannerContentId,bc.fk_banner_Id,bc.banner_keyword,bc.banner_name,
+			bc.banner_url,bc.sort,bc.banner_link_flag,bc.banner_link,bc.banner_target,bc.quote_flag,
+			n.id AS newsId,n.news_name,c.id AS news_columnId,c.column_name as news_column_name
+		FROM hyc_c_banner b 
+		LEFT JOIN hyc_c_banner_content bc ON b.id = bc.fk_banner_Id
+		LEFT JOIN hyc_c_banner_news bn ON bn.fk_banner_Id = bc.id
+		LEFT JOIN hyc_c_news n ON n.id = bn.fk_news_Id
+		LEFT JOIN hyc_c_column c ON c.id = n.fk_column_Id
+		WHERE 1=1
+		<if test="hospitalId != null">
+		   AND b.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+		</if>
+		<if test="platformId != null">
+		   AND b.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+		</if> 
+		<if test="columnId != null">
+		   AND b.fk_column_id = #{columnId,jdbcType=VARCHAR}
+		</if>
+		ORDER BY bc.sort ASC
+  </select>
+  
+  <!-- 查询栏目banner -->
+  <select id="findColumnBanners" parameterType="map" resultMap="BaseColumnBannerVoMap">
+	  	SELECT 
+		  	c.id as columnId,c.column_id as columnRawId,p.platform_name,c.p_id AS column_p_id,c.column_name,c.hospital_id as hospitalId,d.departname,c.fk_platform_id,b.banner_theme,
+			b.update_time,b.create_user,CASE WHEN bc.bannerCount IS NULL THEN 0 ELSE  bc.bannerCount END AS bannerCount,bu.realname as userName,c.create_user_name,c.update_user_name
+		FROM hyc_c_column c
+		INNER JOIN t_s_platform p ON c.fk_platform_id = p.id
+		LEFT JOIN hyc_c_banner b ON b.fk_column_id = c.id 
+		LEFT JOIN t_s_depart d ON d.id = c.hospital_id
+		LEFT JOIN (
+			SELECT count(1) AS bannerCount,bc.fk_banner_Id FROM hyc_c_banner_content bc GROUP BY bc.fk_banner_Id
+		) bc ON b.id = bc.fk_banner_Id
+		LEFT JOIN t_s_base_user bu ON b.create_user = bu.ID
+		WHERE 1=1 AND c.state = 0
+		AND c.fk_column_type_id = '902880e64e1ef94d014e1efefc2f0002' <!-- 通用栏目  -->
+		<if test="platformId != null and platformId != ''">
+		   AND c.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+		</if> 
+		<if test="hospitalId != null and hospitalId != ''">
+		   AND c.hospital_id = #{hospitalId,jdbcType=VARCHAR}
+		</if>
+		<if test="columnName != null and columnName !=''">
+		   AND c.column_name like CONCAT('%','${columnName}','%')
+		</if>
+		<if test="bannerTheme != null and bannerTheme !=''">
+		   AND b.banner_theme like CONCAT('%','${bannerTheme}','%')
+		</if>
+		
+		<if test="startDate != null and startDate !=''">
+		   AND b.update_time >= #{startDate,jdbcType=VARCHAR}
+		</if>
+		<if test="endDate != null and endDate != ''">
+		   AND b.update_time &lt;=  #{endDate,jdbcType=VARCHAR}
+		</if>
+  </select>
+  
+  <!-- 查询远程调用 -banner -->
+  <select id="findBannersRemote" parameterType="map" resultType="java.util.HashMap">
+		SELECT 
+			b.id,b.banner_theme AS bannerTheme,b.fk_column_id AS fkColumnId,b.hospital_id AS hospitalId,b.fk_platform_id AS fkPlatformId,
+			bn.fk_news_Id AS newsId,bn.type,bn.fk_video_Id AS videoId,bn.fk_materials_id AS materialsId,
+			bc.banner_keyword AS bannerKeyword,bc.banner_name AS bannerName,bc.banner_url as bannerUrl,bc.sort, 
+			bc.banner_link_flag as bannerLinkFlag,bc.banner_link as bannerLink,bc.banner_target as bannerTarget,bc.quote_flag as quoteFlag 
+		FROM hyc_c_banner b
+		INNER JOIN hyc_c_banner_content bc ON bc.fk_banner_Id = b.id 
+		LEFT JOIN hyc_c_banner_news bn ON bc.id = bn.fk_banner_Id 
+		WHERE 1=1 
+		AND b.state = 0 
+		AND b.hospital_id =  #{hospitalId,jdbcType=VARCHAR}
+		AND b.fk_platform_id = #{platformId,jdbcType=VARCHAR}
+		AND b.fk_column_id =  #{columnId,jdbcType=VARCHAR}
+		AND b.public_time &lt;=  #{time,jdbcType=VARCHAR}
+		AND b.expire_time >=  #{time,jdbcType=VARCHAR}
+		ORDER BY bc.sort ASC 
+  </select>
+  
+  <!-- 根据栏目id 查询栏目的banner -->
+  <select id="findColumnBannerByColumId" parameterType="map" resultMap="BaseResultMap">
+  		SELECT 
+			*
+		FROM hyc_c_banner b
+		WHERE b.fk_column_id = #{columId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+</mapper>

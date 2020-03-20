@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dome.web.sysdepart.dao.TSDepartMapper">
+  <resultMap id="BaseResultMap" type="com.dome.bean.TSDepart">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="departname" jdbcType="VARCHAR" property="departname" />
+    <result column="parentdepartid" jdbcType="VARCHAR" property="parentdepartid" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="org_type" jdbcType="VARCHAR" property="orgType" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="depart_order" jdbcType="VARCHAR" property="departOrder" />
+    <result column="departname_en" jdbcType="VARCHAR" property="departnameEn" />
+    <result column="departname_abbr" jdbcType="VARCHAR" property="departnameAbbr" />
+    <result column="org_log" jdbcType="VARCHAR" property="orgLog" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="sys_company_code" jdbcType="VARCHAR" property="sysCompanyCode" />
+    <result column="sys_org_code" jdbcType="VARCHAR" property="sysOrgCode" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dome.bean.TSDepart">
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, departname, parentdepartid, org_code, org_type, mobile, fax, address, depart_order, 
+    departname_en, departname_abbr, org_log, memo, create_name, create_by, create_date, 
+    update_name, update_by, update_date, sys_company_code, sys_org_code
+  </sql>
+  <sql id="Blob_Column_List">
+    description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_s_depart
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_s_depart
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dome.bean.TSDepart">
+    insert into t_s_depart (ID, departname, parentdepartid, 
+      org_code, org_type, mobile, 
+      fax, address, depart_order, 
+      departname_en, departname_abbr, org_log, 
+      memo, create_name, create_by, 
+      create_date, update_name, update_by, 
+      update_date, sys_company_code, sys_org_code, 
+      description)
+    values (#{id,jdbcType=VARCHAR}, #{departname,jdbcType=VARCHAR}, #{parentdepartid,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR}, #{orgType,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{departOrder,jdbcType=VARCHAR}, 
+      #{departnameEn,jdbcType=VARCHAR}, #{departnameAbbr,jdbcType=VARCHAR}, #{orgLog,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{sysCompanyCode,jdbcType=VARCHAR}, #{sysOrgCode,jdbcType=VARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dome.bean.TSDepart">
+    insert into t_s_depart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="departname != null">
+        departname,
+      </if>
+      <if test="parentdepartid != null">
+        parentdepartid,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="orgType != null">
+        org_type,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="departOrder != null">
+        depart_order,
+      </if>
+      <if test="departnameEn != null">
+        departname_en,
+      </if>
+      <if test="departnameAbbr != null">
+        departname_abbr,
+      </if>
+      <if test="orgLog != null">
+        org_log,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="sysCompanyCode != null">
+        sys_company_code,
+      </if>
+      <if test="sysOrgCode != null">
+        sys_org_code,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="departname != null">
+        #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentdepartid != null">
+        #{parentdepartid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departOrder != null">
+        #{departOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="departnameEn != null">
+        #{departnameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="departnameAbbr != null">
+        #{departnameAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLog != null">
+        #{orgLog,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysCompanyCode != null">
+        #{sysCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOrgCode != null">
+        #{sysOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dome.bean.TSDepart">
+    update t_s_depart
+    <set>
+      <if test="departname != null">
+        departname = #{departname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentdepartid != null">
+        parentdepartid = #{parentdepartid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        org_type = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="departOrder != null">
+        depart_order = #{departOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="departnameEn != null">
+        departname_en = #{departnameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="departnameAbbr != null">
+        departname_abbr = #{departnameAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLog != null">
+        org_log = #{orgLog,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysCompanyCode != null">
+        sys_company_code = #{sysCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOrgCode != null">
+        sys_org_code = #{sysOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dome.bean.TSDepart">
+    update t_s_depart
+    set departname = #{departname,jdbcType=VARCHAR},
+      parentdepartid = #{parentdepartid,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      org_type = #{orgType,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      depart_order = #{departOrder,jdbcType=VARCHAR},
+      departname_en = #{departnameEn,jdbcType=VARCHAR},
+      departname_abbr = #{departnameAbbr,jdbcType=VARCHAR},
+      org_log = #{orgLog,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      sys_company_code = #{sysCompanyCode,jdbcType=VARCHAR},
+      sys_org_code = #{sysOrgCode,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.dome.bean.TSDepart">
+    update t_s_depart
+    set departname = #{departname,jdbcType=VARCHAR},
+      parentdepartid = #{parentdepartid,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      org_type = #{orgType,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      depart_order = #{departOrder,jdbcType=VARCHAR},
+      departname_en = #{departnameEn,jdbcType=VARCHAR},
+      departname_abbr = #{departnameAbbr,jdbcType=VARCHAR},
+      org_log = #{orgLog,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      sys_company_code = #{sysCompanyCode,jdbcType=VARCHAR},
+      sys_org_code = #{sysOrgCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <!-- 查询用户单位 -->
+  <select id="findUserDeparts" parameterType="map" resultMap="BaseResultMap">
+  		SELECT
+			d.*
+		FROM
+			hyc_c_user_depart ud
+		LEFT JOIN t_s_depart d ON ud.fk_depart_id = d.id
+		WHERE ud.fk_user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询一级单位 -->
+  <select id="findTopDepartsPage" parameterType="map" resultMap="BaseResultMap">
+  		SELECT * FROM t_s_depart d 
+  		WHERE d.org_type = 4 AND d.parentdepartid IS NULL 
+  		<if test="departName != null">
+  			AND d.departname LIKE CONCAT('%','${departName}','%')
+  		</if>
+  </select>
+  
+  <!-- 查询医院课 -->
+  <select id="findHospitalSection" parameterType="map" resultMap="BaseResultMap">
+  		SELECT * FROM t_s_depart d 
+  		WHERE d.org_type = 5
+  		<if test="hospitalId != null and hospitalId !=''">
+  			 AND d.parentdepartid = #{hospitalId,jdbcType=VARCHAR}
+  		</if>
+  </select>
+  
+</mapper>
