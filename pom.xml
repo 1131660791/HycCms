@@ -18,7 +18,7 @@
 		</repository>
    </repositories>
    <properties>
-	   <spring.version>4.3.11.RELEASE</spring.version>
+	   <spring.version>5.2.22.RELEASE</spring.version>
 	   <shiro.version>1.2.3</shiro.version>
 	   <mapper.version>4.0.3</mapper.version>
 	   <swagger.version>2.7.0</swagger.version>
